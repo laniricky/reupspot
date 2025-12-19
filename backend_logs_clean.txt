@@ -1,0 +1,107 @@
+ecommerce-backend  | 
+ecommerce-backend  | > ecommerce-backend@1.0.0 dev
+ecommerce-backend  | > ts-node-dev --respawn --transpile-only src/server.ts
+ecommerce-backend  | 
+ecommerce-backend  | [INFO] 08:42:47 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.9.3)
+ecommerce-backend  | [INFO] 2025-12-19T08:42:53.713Z - Database connected successfully 
+ecommerce-backend  | [INFO] 2025-12-19T08:42:53.723Z - Server running on port 3000 
+ecommerce-backend  | [INFO] 2025-12-19T08:42:53.726Z - Environment: development 
+ecommerce-backend  | ValidationError: The Express 'trust proxy' setting is true, which allows anyone to trivially bypass IP-based rate limiting. See https://express-rate-limit.github.io/ERR_ERL_PERMISSIVE_TRUST_PROXY/ for more information.
+ecommerce-backend  |     at Object.trustProxy (/app/node_modules/express-rate-limit/dist/index.cjs:167:13)
+ecommerce-backend  |     at Object.wrappedValidations.<computed> [as trustProxy] (/app/node_modules/express-rate-limit/dist/index.cjs:397:22)
+ecommerce-backend  |     at Object.keyGenerator (/app/node_modules/express-rate-limit/dist/index.cjs:657:20)
+ecommerce-backend  |     at /app/node_modules/express-rate-limit/dist/index.cjs:710:32
+ecommerce-backend  |     at processTicksAndRejections (node:internal/process/task_queues:95:5)
+ecommerce-backend  |     at /app/node_modules/express-rate-limit/dist/index.cjs:691:5 {
+ecommerce-backend  |   code: 'ERR_ERL_PERMISSIVE_TRUST_PROXY',
+ecommerce-backend  |   help: 'https://express-rate-limit.github.io/ERR_ERL_PERMISSIVE_TRUST_PROXY/'
+ecommerce-backend  | }
+ecommerce-backend  | ValidationError: The Express 'trust proxy' setting is true, which allows anyone to trivially bypass IP-based rate limiting. See https://express-rate-limit.github.io/ERR_ERL_PERMISSIVE_TRUST_PROXY/ for more information.
+ecommerce-backend  |     at Object.trustProxy (/app/node_modules/express-rate-limit/dist/index.cjs:167:13)
+ecommerce-backend  |     at Object.wrappedValidations.<computed> [as trustProxy] (/app/node_modules/express-rate-limit/dist/index.cjs:397:22)
+ecommerce-backend  |     at Object.keyGenerator (/app/node_modules/express-rate-limit/dist/index.cjs:657:20)
+ecommerce-backend  |     at /app/node_modules/express-rate-limit/dist/index.cjs:710:32
+ecommerce-backend  |     at processTicksAndRejections (node:internal/process/task_queues:95:5)
+ecommerce-backend  |     at /app/node_modules/express-rate-limit/dist/index.cjs:691:5 {
+ecommerce-backend  |   code: 'ERR_ERL_PERMISSIVE_TRUST_PROXY',
+ecommerce-backend  |   help: 'https://express-rate-limit.github.io/ERR_ERL_PERMISSIVE_TRUST_PROXY/'
+ecommerce-backend  | }
+ecommerce-backend  | Executed query {
+ecommerce-backend  |   text: 'SELECT id FROM users WHERE email = $1 OR phone = $2',
+ecommerce-backend  |   duration: 73,
+ecommerce-backend  |   rows: 0
+ecommerce-backend  | }
+ecommerce-backend  | Executed query {
+ecommerce-backend  |   text: 'INSERT INTO users (email, phone, password_hash, role)\n' +
+ecommerce-backend  |     '       VALUES ($1, $2, $3, $4)\n' +
+ecommerce-backend  |     '       RETURNING id, email, phone, role, email_verified, phone_verified, created_at',
+ecommerce-backend  |   duration: 59,
+ecommerce-backend  |   rows: 1
+ecommerce-backend  | }
+ecommerce-backend  | Executed query {
+ecommerce-backend  |   text: 'INSERT INTO device_fingerprints (user_id, fingerprint_hash, ip_address, user_agent)\n' +
+ecommerce-backend  |     '       VALUES ($1, $2, $3, $4)',
+ecommerce-backend  |   duration: 31,
+ecommerce-backend  |   rows: 1
+ecommerce-backend  | }
+ecommerce-backend  | Executed query {
+ecommerce-backend  |   text: 'INSERT INTO verification_codes (user_id, code, type, expires_at)\n' +
+ecommerce-backend  |     "       VALUES ($1, $2, 'email', $3)",
+ecommerce-backend  |   duration: 36,
+ecommerce-backend  |   rows: 1
+ecommerce-backend  | }
+ecommerce-backend  | [INFO] 2025-12-19T08:43:40.967Z - Email verification code for finaltest@test.com: 640362 
+ecommerce-backend  | [ERROR] 2025-12-19T09:04:46.903Z - Unhandled error: Error: Connection terminated due to connection timeout
+ecommerce-backend  |     at /app/node_modules/pg-pool/index.js:45:11
+ecommerce-backend  |     at processTicksAndRejections (node:internal/process/task_queues:95:5)
+ecommerce-backend  |     at query (/app/src/config/database.ts:22:17)
+ecommerce-backend  |     at ShopService.getShopBySlug (/app/src/modules/shops/shop.service.ts:78:24)
+ecommerce-backend  |     at ShopController.getShopBySlug (/app/src/modules/shops/shop.controller.ts:23:26) {
+ecommerce-backend  |   [cause]: Error: Connection terminated unexpectedly
+ecommerce-backend  |       at Connection.<anonymous> (/app/node_modules/pg/lib/client.js:136:73)
+ecommerce-backend  |       at Object.onceWrapper (node:events:631:28)
+ecommerce-backend  |       at Connection.emit (node:events:517:28)
+ecommerce-backend  |       at Socket.<anonymous> (/app/node_modules/pg/lib/connection.js:62:12)
+ecommerce-backend  |       at Socket.emit (node:events:517:28)
+ecommerce-backend  |       at TCP.<anonymous> (node:net:350:12)
+ecommerce-backend  | }
+ecommerce-backend  | [ERROR] 2025-12-19T09:12:00.257Z - Unhandled error: Error: Connection terminated due to connection timeout
+ecommerce-backend  |     at /app/node_modules/pg-pool/index.js:45:11
+ecommerce-backend  |     at processTicksAndRejections (node:internal/process/task_queues:95:5)
+ecommerce-backend  |     at query (/app/src/config/database.ts:22:17)
+ecommerce-backend  |     at ShopService.getShopBySlug (/app/src/modules/shops/shop.service.ts:78:24)
+ecommerce-backend  |     at ShopController.getShopBySlug (/app/src/modules/shops/shop.controller.ts:23:26) {
+ecommerce-backend  |   [cause]: Error: Connection terminated unexpectedly
+ecommerce-backend  |       at Connection.<anonymous> (/app/node_modules/pg/lib/client.js:136:73)
+ecommerce-backend  |       at Object.onceWrapper (node:events:631:28)
+ecommerce-backend  |       at Connection.emit (node:events:517:28)
+ecommerce-backend  |       at Socket.<anonymous> (/app/node_modules/pg/lib/connection.js:62:12)
+ecommerce-backend  |       at Socket.emit (node:events:517:28)
+ecommerce-backend  |       at TCP.<anonymous> (node:net:350:12)
+ecommerce-backend  | }
+ecommerce-backend  | Executed query {
+ecommerce-backend  |   text: 'SELECT s.*, st.theme_template, st.config as theme_config, ts.score as trust_score\n' +
+ecommerce-backend  |     '       FROM shops s\n' +
+ecommerce-backend  |     '       LEFT JOIN shop_themes st ON s.id = st.shop_id\n' +
+ecommerce-backend  |     '       LEFT JOIN trust_scores ts ON s.id = ts.shop_id\n' +
+ecommerce-backend  |     '       WHERE s.slug = $1',
+ecommerce-backend  |   duration: 1885,
+ecommerce-backend  |   rows: 0
+ecommerce-backend  | }
+ecommerce-backend  | 
+ecommerce-backend  | > ecommerce-backend@1.0.0 dev
+ecommerce-backend  | > ts-node-dev --respawn --transpile-only src/server.ts
+ecommerce-backend  | 
+ecommerce-backend  | [INFO] 12:31:08 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.9.3)
+ecommerce-backend  | [ERROR] 2025-12-19T12:31:15.861Z - Failed to start server: Error: Connection terminated due to connection timeout
+ecommerce-backend  |     at /app/node_modules/pg-pool/index.js:45:11
+ecommerce-backend  |     at processTicksAndRejections (node:internal/process/task_queues:95:5)
+ecommerce-backend  |     at startServer (/app/src/server.ts:9:9) {
+ecommerce-backend  |   [cause]: Error: Connection terminated unexpectedly
+ecommerce-backend  |       at Connection.<anonymous> (/app/node_modules/pg/lib/client.js:136:73)
+ecommerce-backend  |       at Object.onceWrapper (node:events:631:28)
+ecommerce-backend  |       at Connection.emit (node:events:517:28)
+ecommerce-backend  |       at Socket.<anonymous> (/app/node_modules/pg/lib/connection.js:62:12)
+ecommerce-backend  |       at Socket.emit (node:events:517:28)
+ecommerce-backend  |       at TCP.<anonymous> (node:net:350:12)
+ecommerce-backend  | }

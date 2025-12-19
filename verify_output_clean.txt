@@ -1,0 +1,46 @@
+1. Registering...
+Registered: {
+    "user":  {
+                 "id":  "958cc658-f3cc-4a54-8c11-29a2c74c4362",
+                 "email":  "seller_964268859@test.com",
+                 "phone":  null,
+                 "role":  "seller",
+                 "emailVerified":  false,
+                 "phoneVerified":  false
+             },
+    "token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1OGNjNjU4LWYzY2MtNGE1NC04YzExLTI5YTJjNzRjNDM2MiIsImVtYWlsIjoic2VsbGVyXzk2NDI2ODg1OUB0ZXN0LmNvbSIsInJvbGUiOiJzZWxsZXIiLCJpYXQiOjE3NjYxNDc5ODYsImV4cCI6MTc2Njc1Mjc4Nn0.z8j3OYEtsGRQvl4IXPgD_p0CYCm-VYfoVLgFCIioh-s"
+}
+2. Logging in...
+Error Response: 
+Invoke-RestMethod : 
+{"error":"Invalid cred
+entials","statusCode":
+401}
+At C:\Users\rucom\.gem
+ini\antigravity\brain\
+591370da-1a6a-402b-81c
+a-f1e703e9852e\verify_
+products.ps1:21 
+char:20
++ ...      return 
+Invoke-RestMethod 
+-Method $Method -Uri 
+$Url -Headers $hea ...
++                 ~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~
+    + CategoryInfo    
+          : InvalidO  
+  peration: (System   
+ .Net.HttpWebReque    
+st:HttpWebRequest    
+) [Invoke-RestMet    
+hod], WebExceptio    n
+    + FullyQualifiedE 
+   rrorId : WebCmdle  
+  tWebResponseExcep   
+ tion,Microsoft.Po    
+werShell.Commands    
+.InvokeRestMethod    
+Command

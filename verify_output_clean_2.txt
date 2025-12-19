@@ -1,0 +1,50 @@
+1. Registering...
+Registered: {
+    "user":  {
+                 "id":  "c5bbe3a8-ea93-46a5-ae82-a09cb8e95305",
+                 "email":  "seller_749626729@test.com",
+                 "phone":  null,
+                 "role":  "seller",
+                 "emailVerified":  false,
+                 "phoneVerified":  false
+             },
+    "token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1YmJlM2E4LWVhOTMtNDZhNS1hZTgyLWEwOWNiOGU5NTMwNSIsImVtYWlsIjoic2VsbGVyXzc0OTYyNjcyOUB0ZXN0LmNvbSIsInJvbGUiOiJzZWxsZXIiLCJpYXQiOjE3NjYxNDgwOTAsImV4cCI6MTc2Njc1Mjg5MH0.Km_pq_gO1GZks5nkDbsW0_26E87o_mhgEIgPQmZTetY"
+}
+Token obtained from registration: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1YmJlM2E4LWVhOTMtNDZhNS1hZTgyLWEwOWNiOGU5NTMwNSIsImVtYWlsIjoic2VsbGVyXzc0OTYyNjcyOUB0ZXN0LmNvbSIsInJvbGUiOiJzZWxsZXIiLCJpYXQiOjE3NjYxNDgwOTAsImV4cCI6MTc2Njc1Mjg5MH0.Km_pq_gO1GZks5nkDbsW0_26E87o_mhgEIgPQmZTetY
+2. Logging in (verification)...
+Warning: Request failed but continuing. The remote server returned an error: (401) Unauthorized.
+Login failed (investigate later), proceeding with registration token.
+3. Creating Shop...
+Shop Created: 3e2987c9-60a0-4a11-8b72-03973f19d413
+4. Creating Product...
+Error Response: 
+Invoke-RestMethod : 
+{"error":"Not found"}
+At C:\Users\rucom\.gem
+ini\antigravity\brain\
+591370da-1a6a-402b-81c
+a-f1e703e9852e\verify_
+products.ps1:22 
+char:20
++ ...      return 
+Invoke-RestMethod 
+-Method $Method -Uri 
+$Url -Headers $hea ...
++                 ~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~
+    + CategoryInfo    
+          : InvalidO  
+  peration: (System   
+ .Net.HttpWebReque    
+st:HttpWebRequest    
+) [Invoke-RestMet    
+hod], WebExceptio    n
+    + FullyQualifiedE 
+   rrorId : WebCmdle  
+  tWebResponseExcep   
+ tion,Microsoft.Po    
+werShell.Commands    
+.InvokeRestMethod    
+Command

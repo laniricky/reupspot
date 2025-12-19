@@ -1,0 +1,57 @@
+1. Registering...
+Registered: {
+    "user":  {
+                 "id":  "2ff3c4f5-41a7-4129-ae63-f6063687a896",
+                 "email":  "seller_2043611127@test.com",
+                 "phone":  null,
+                 "role":  "seller",
+                 "emailVerified":  false,
+                 "phoneVerified":  false
+             },
+    "token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZjNjNGY1LTQxYTctNDEyOS1hZTYzLWY2MDYzNjg3YTg5NiIsImVtYWlsIjoic2VsbGVyXzIwNDM2MTExMjdAdGVzdC5jb20iLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNzY2MTQ5MjkzLCJleHAiOjE3NjY3NTQwOTN9.Q0bGHhH9sDXQCVX9iqPMUx8dZ8DCboz4IHa3O1i4zbE"
+}
+Token obtained from registration: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmZjNjNGY1LTQxYTctNDEyOS1hZTYzLWY2MDYzNjg3YTg5NiIsImVtYWlsIjoic2VsbGVyXzIwNDM2MTExMjdAdGVzdC5jb20iLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNzY2MTQ5MjkzLCJleHAiOjE3NjY3NTQwOTN9.Q0bGHhH9sDXQCVX9iqPMUx8dZ8DCboz4IHa3O1i4zbE
+2. Logging in (verification)...
+Warning: Request failed but continuing. The remote server returned an error: (401) Unauthorized.
+Login failed (investigate later), proceeding with registration token.
+3. Creating Shop...
+Shop Created: 9ded1acb-56c9-4f54-af3e-3a68a370eb18
+4. Creating Product...
+Product Created: 6045f905-1301-4cff-b814-e64c1c2822be
+5. Getting Product...
+Product Retrieved: Test Product
+6. Searching...
+Error Response: 
+Invoke-RestMethod : 
+{"error":"missing 
+FROM-clause entry for 
+table \"p\"","statusCo
+de":500}
+At C:\Users\rucom\.gem
+ini\antigravity\brain\
+591370da-1a6a-402b-81c
+a-f1e703e9852e\verify_
+products.ps1:25 
+char:20
++ ...      return 
+Invoke-RestMethod 
+-Method $Method -Uri 
+$Url -Headers $hea ...
++                 ~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~
+    + CategoryInfo    
+          : InvalidO  
+  peration: (System   
+ .Net.HttpWebReque    
+st:HttpWebRequest    
+) [Invoke-RestMet    
+hod], WebExceptio    n
+    + FullyQualifiedE 
+   rrorId : WebCmdle  
+  tWebResponseExcep   
+ tion,Microsoft.Po    
+werShell.Commands    
+.InvokeRestMethod    
+Command

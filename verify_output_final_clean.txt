@@ -1,0 +1,55 @@
+1. Registering...
+Registered: {
+    "user":  {
+                 "id":  "dd76f03b-b7e5-4517-bc02-da110351ae9c",
+                 "email":  "seller_1519223772@test.com",
+                 "phone":  null,
+                 "role":  "seller",
+                 "emailVerified":  false,
+                 "phoneVerified":  false
+             },
+    "token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRkNzZmMDNiLWI3ZTUtNDUxNy1iYzAyLWRhMTEwMzUxYWU5YyIsImVtYWlsIjoic2VsbGVyXzE1MTkyMjM3NzJAdGVzdC5jb20iLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNzY2MTQ5MDc2LCJleHAiOjE3NjY3NTM4NzZ9.dm9tGEw_zXKnSg9Aaz9X0MBHHgCPRCoHDDbiNURqbBs"
+}
+Token obtained from registration: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRkNzZmMDNiLWI3ZTUtNDUxNy1iYzAyLWRhMTEwMzUxYWU5YyIsImVtYWlsIjoic2VsbGVyXzE1MTkyMjM3NzJAdGVzdC5jb20iLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNzY2MTQ5MDc2LCJleHAiOjE3NjY3NTM4NzZ9.dm9tGEw_zXKnSg9Aaz9X0MBHHgCPRCoHDDbiNURqbBs
+2. Logging in (verification)...
+Warning: Request failed but continuing. The remote server returned an error: (401) Unauthorized.
+Login failed (investigate later), proceeding with registration token.
+3. Creating Shop...
+Shop Created: b15b4ebb-3b3c-4a59-9326-712abda0a438
+4. Creating Product...
+Product Created: 5340bdb9-38e2-4db1-9825-af7a32488623
+5. Getting Product...
+Product Retrieved: Test Product
+6. Searching...
+Error Response: 
+Invoke-RestMethod : 
+{"error":"column 
+reference \"status\" is 
+ambiguous","statusCode":
+500}
+At C:\Users\rucom\.gemin
+i\antigravity\brain\5913
+70da-1a6a-402b-81ca-f1e7
+03e9852e\verify_products
+.ps1:25 char:20
++ ...      return 
+Invoke-RestMethod 
+-Method $Method -Uri 
+$Url -Headers $hea ...
++                 ~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
+~~~
+    + CategoryInfo      
+        : InvalidOpera  
+  tion: (System.Net.H   
+ ttpWebRequest:HttpW    
+ebRequest) [Invoke-    
+RestMethod], WebExc    
+eption
+    + FullyQualifiedErr 
+   orId : WebCmdletWeb  
+  ResponseException,M   
+ icrosoft.PowerShell    
+.Commands.InvokeRes    
+tMethodCommand

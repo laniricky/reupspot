@@ -1,0 +1,54 @@
+1. Registering...
+Registered: {
+    "user":  {
+                 "id":  "6f3d2d39-bf1c-40d5-a4cd-e8297d37a1e5",
+                 "email":  "seller_1292453620@test.com",
+                 "phone":  null,
+                 "role":  "seller",
+                 "emailVerified":  false,
+                 "phoneVerified":  false
+             },
+    "token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZmM2QyZDM5LWJmMWMtNDBkNS1hNGNkLWU4Mjk3ZDM3YTFlNSIsImVtYWlsIjoic2VsbGVyXzEyOTI0NTM2MjBAdGVzdC5jb20iLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNzY2MTQ4NTY5LCJleHAiOjE3NjY3NTMzNjl9.e6NIoPj2XICuXig9ZmrJC1u4Cx0Hk-ufqcIe0SK3xFI"
+}
+Token obtained from registration: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZmM2QyZDM5LWJmMWMtNDBkNS1hNGNkLWU4Mjk3ZDM3YTFlNSIsImVtYWlsIjoic2VsbGVyXzEyOTI0NTM2MjBAdGVzdC5jb20iLCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNzY2MTQ4NTY5LCJleHAiOjE3NjY3NTMzNjl9.e6NIoPj2XICuXig9ZmrJC1u4Cx0Hk-ufqcIe0SK3xFI
+2. Logging in (verification)...
+Warning: Request failed but continuing. The remote server returned an error: (401) Unauthorized.
+Login failed (investigate later), proceeding with registration token.
+3. Creating Shop...
+Shop Created: f7fd033d-3650-44e5-b451-04edc7ba601f
+4. Creating Product...
+Product Created: baaa3a13-8190-4428-be9a-dc8ca6a25f94
+5. Getting Product...
+Product Retrieved: Test Product
+6. Searching...
+Error Response: 
+Invoke-RestMethod : 
+{"error":"column 
+\"status\" does not 
+exist","statusCode":500}
+At C:\Users\rucom\.gemin
+i\antigravity\brain\5913
+70da-1a6a-402b-81ca-f1e7
+03e9852e\verify_products
+.ps1:25 char:20
++ ...      return 
+Invoke-RestMethod 
+-Method $Method -Uri 
+$Url -Headers $hea ...
++                 ~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
+~~~
+    + CategoryInfo      
+        : InvalidOpera  
+  tion: (System.Net.H   
+ ttpWebRequest:HttpW    
+ebRequest) [Invoke-    
+RestMethod], WebExc    
+eption
+    + FullyQualifiedErr 
+   orId : WebCmdletWeb  
+  ResponseException,M   
+ icrosoft.PowerShell    
+.Commands.InvokeRes    
+tMethodCommand

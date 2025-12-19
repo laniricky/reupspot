@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: ecommerce-db
+    environment:
+      POSTGRES_USER: ecommerce
+      POSTGRES_PASSWORD: devpassword123
+      POSTGRES_DB: ecommerce
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER:-ecommerce}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ecommerce-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ecommerce-backend
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ecommerce
+      DB_PASSWORD: devpassword123
+      DB_NAME: ecommerce
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-in-production-min-32-characters}
+      UPLOAD_DIR: /app/uploads
+    volumes:
+      - ./backend:/app
+      - backend_node_modules:/app/node_modules
+      - upload_data:/app/uploads
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: npm run dev
+    networks:
+      - ecommerce-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ecommerce-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: http://localhost:3000/api
+    networks:
+      - ecommerce-network
+
+volumes:
+  postgres_data:
+  upload_data:
+  backend_node_modules:
+
+
+networks:
+  ecommerce-network:
+    driver: bridge
