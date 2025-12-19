@@ -9,6 +9,8 @@ import { generalLimiter } from './middleware/rateLimit';
 import authRoutes from './modules/auth/auth.routes';
 import shopRoutes from './modules/shops/shop.routes';
 import productRoutes from './modules/products/product.routes';
+import orderRoutes from './modules/orders/order.routes';
+import paymentsRoutes from './modules/payments/payments.routes';
 
 const app = express();
 
@@ -22,7 +24,7 @@ app.use(generalLimiter);
 app.set('trust proxy', true);
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
@@ -30,14 +32,16 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/shops', shopRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/payments', paymentsRoutes);
 
 // 404 handler
-app.use((req, res) => {
+app.use((_req, res) => {
     res.status(404).json({ error: 'Not found' });
 });
 
 // Global error handler
-app.use((err: Error | AppError, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error | AppError, _req: Request, res: Response, _next: NextFunction) => {
     if (err instanceof AppError) {
         return res.status(err.statusCode).json({
             error: err.message,
