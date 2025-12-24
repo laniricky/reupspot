@@ -2,11 +2,12 @@ import { Router } from 'express';
 import { authController } from './auth.controller';
 import { authenticate } from '../../middleware/auth';
 import { authLimiter } from '../../middleware/rateLimit';
+import { requireCaptcha } from '../../middleware/captcha';
 
 const router = Router();
 
 // Public routes
-router.post('/register', authLimiter, authController.register.bind(authController));
+router.post('/register', authLimiter, requireCaptcha, authController.register.bind(authController));
 router.post('/login', authLimiter, authController.login.bind(authController));
 router.post('/guest-session', authController.createGuestSession.bind(authController));
 

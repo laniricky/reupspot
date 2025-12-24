@@ -5,6 +5,7 @@ import { config } from '../../config/env';
 import { ConflictError, UnauthorizedError, ValidationError } from '../../utils/errors';
 import { generateFingerprint, generateVerificationCode } from '../../utils/fingerprint';
 import { logger } from '../../utils/logger';
+import { notificationService } from '../../services/notification.service';
 
 interface RegisterInput {
     email: string;
@@ -65,7 +66,21 @@ export class AuthService {
             [user.id, verificationCode, expiresAt]
         );
 
-        logger.info(`Email verification code for ${user.email}: ${verificationCode}`);
+        // Send email verification code
+        await notificationService.sendEmailVerification(user.email, verificationCode);
+
+        // If phone provided, generate and send phone verification code
+        if (user.phone) {
+            const phoneCode = generateVerificationCode();
+            await query(
+                `INSERT INTO verification_codes (user_id, code, type, expires_at)
+           VALUES ($1, $2, 'phone', $3)`,
+                [user.id, phoneCode, expiresAt]
+            );
+            await notificationService.sendPhoneVerification(user.phone, phoneCode);
+        }
+
+        logger.info(`User registered: ${user.email}`);
 
         // Generate JWT
         const token = this.generateToken(user);

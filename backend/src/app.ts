@@ -11,6 +11,13 @@ import shopRoutes from './modules/shops/shop.routes';
 import productRoutes from './modules/products/product.routes';
 import orderRoutes from './modules/orders/order.routes';
 import paymentsRoutes from './modules/payments/payments.routes';
+import reviewRoutes from './modules/reviews/review.routes';
+import followRoutes from './modules/follows/follow.routes';
+import searchRoutes from './modules/search/search.routes';
+import disputeRoutes from './modules/disputes/dispute.routes';
+import cartRoutes from './modules/cart/cart.routes';
+import trustRoutes from './modules/trust/trust.routes';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
@@ -18,6 +25,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(generalLimiter);
 
 // Trust proxy (for getting real IP behind load balancer)
@@ -34,6 +42,12 @@ app.use('/api/shops', shopRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/payments', paymentsRoutes);
+app.use('/api/reviews', reviewRoutes);
+app.use('/api/follows', followRoutes);
+app.use('/api/search', searchRoutes);
+app.use('/api/disputes', disputeRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/trust', trustRoutes);
 
 // 404 handler
 app.use((_req, res) => {

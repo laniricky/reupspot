@@ -1,6 +1,7 @@
 import { query } from '../../config/database';
 import { NotFoundError, BadRequestError, ForbiddenError } from '../../utils/errors';
 import { logger } from '../../utils/logger';
+import { trustService } from '../trust/trust.service';
 
 export interface CreateProductInput {
     shopId: string;
@@ -36,6 +37,44 @@ export interface ProductSearchParams {
 export class ProductService {
     async create(input: CreateProductInput) {
         const { shopId, name, description, price, category, inventoryCount, images } = input;
+
+        // ANTI-SCAM: Check for contact info in name and description
+        const textToCheck = `${name} ${description}`;
+        const contactCheck = await trustService.detectContactSharing(textToCheck);
+
+        if (contactCheck.hasContact) {
+            // Record violation
+            await trustService.recordViolation(shopId, 'contact_sharing', 'medium', {
+                matches: contactCheck.matches,
+                productName: name
+            });
+
+            throw new BadRequestError(
+                'Product listing cannot contain contact information (phone numbers, emails, WhatsApp, Telegram links). ' +
+                'All communication must happen through the platform.'
+            );
+        }
+
+        // Check new seller restrictions
+        const sellerCheck = await trustService.checkNewSellerRestrictions(shopId);
+        if (!sellerCheck.allowed) {
+            throw new BadRequestError(sellerCheck.reason || 'New seller restriction applies');
+        }
+
+        // Check high-risk category restrictions for new sellers
+        const shopResult = await query(
+            'SELECT EXTRACT(DAY FROM NOW() - created_at) AS age_days FROM shops WHERE id = $1',
+            [shopId]
+        );
+        const shopAge = shopResult.rows[0]?.age_days || 0;
+
+        const categoryAllowed = await trustService.checkHighRiskCategory(category, shopAge);
+        if (!categoryAllowed) {
+            throw new BadRequestError(
+                `New sellers cannot list products in the "${category}" category. ` +
+                'This restriction lifts after 7 days of activity.'
+            );
+        }
 
         const result = await query(
             `INSERT INTO products (
