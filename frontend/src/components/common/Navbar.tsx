@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Menu, X, Search, Home, Store, LogIn, UserPlus } from 'lucide-react';
+import { NotificationBadge } from '../notifications/NotificationBadge';
 
 export function Navbar() {
     const { isAuthenticated, logout, user } = useAuth();
@@ -44,6 +45,7 @@ export function Navbar() {
                     <div className="hidden md:flex items-center space-x-4">
                         {isAuthenticated ? (
                             <>
+                                <NotificationBadge />
                                 <span className="text-gray-700 text-sm">Hi, {user?.email}</span>
                                 {user?.role === 'buyer' && (
                                     <Link to="/buyer/dashboard" className="text-gray-700 hover:text-blue-600 font-medium">Dashboard</Link>

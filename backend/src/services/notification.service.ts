@@ -1,5 +1,6 @@
 import { config } from '../config/env';
 import { logger } from '../utils/logger';
+import { query } from '../config/database';
 
 export interface EmailOptions {
     to: string;
@@ -71,6 +72,68 @@ class NotificationService {
             to: phone,
             message: `Your ReupSpot verification code is: ${code}`
         });
+    }
+
+    /**
+     * Create an in-app notification
+     */
+    async createNotification(userId: string, type: string, title: string, message: string, data: any = {}): Promise<any> {
+        const result = await query(
+            `INSERT INTO notifications (user_id, type, title, message, data)
+             VALUES ($1, $2, $3, $4, $5)
+             RETURNING *`,
+            [userId, type, title, message, data]
+        );
+        return result.rows[0];
+    }
+
+    /**
+     * Get user notifications
+     */
+    async getUserNotifications(userId: string, limit: number = 20, offset: number = 0) {
+        const result = await query(
+            `SELECT * FROM notifications
+             WHERE user_id = $1
+             ORDER BY created_at DESC
+             LIMIT $2 OFFSET $3`,
+            [userId, limit, offset]
+        );
+
+        const countResult = await query(
+            `SELECT COUNT(*) as count FROM notifications WHERE user_id = $1 AND read = FALSE`,
+            [userId]
+        );
+
+        return {
+            notifications: result.rows,
+            unreadCount: parseInt(countResult.rows[0].count),
+        };
+    }
+
+    /**
+     * Mark notification as read
+     */
+    async markAsRead(notificationId: string, userId: string) {
+        await query(
+            `UPDATE notifications
+             SET read = TRUE
+             WHERE id = $1 AND user_id = $2`,
+            [notificationId, userId]
+        );
+        return { success: true };
+    }
+
+    /**
+     * Mark all notifications as read
+     */
+    async markAllAsRead(userId: string) {
+        await query(
+            `UPDATE notifications
+             SET read = TRUE
+             WHERE user_id = $1 AND read = FALSE`,
+            [userId]
+        );
+        return { success: true };
     }
 }
 
