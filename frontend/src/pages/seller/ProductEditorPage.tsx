@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 import { api } from '../../services/api';
+import { useToast } from '../../hooks/useToast';
+import { ImageUpload } from '../../components/common/ImageUpload';
+import { LoadingSpinner } from '../../components/common/LoadingSpinner';
 
 interface Shop {
     id: string;
@@ -10,6 +13,7 @@ export function ProductEditorPage() {
     const { productId } = useParams<{ productId: string }>();
     const { shop } = useOutletContext<{ shop: Shop }>();
     const navigate = useNavigate();
+    const toast = useToast();
     const isEdit = !!productId;
 
     const [formData, setFormData] = useState({
@@ -50,20 +54,22 @@ export function ProductEditorPage() {
             shopId: shop.id,
             price: Number(formData.price),
             stock_quantity: Number(formData.stock_quantity),
-            // Mock images for now if empty
-            images: formData.images.length ? formData.images : ['https://via.placeholder.com/300']
+            // Mock images logic removed
+            images: formData.images
         };
 
         try {
             if (isEdit) {
                 await api.put(`/products/${productId}`, payload);
+                toast.success('Product updated successfully');
             } else {
                 await api.post('/products', payload);
+                toast.success('Product created successfully');
             }
             navigate('/seller/products');
         } catch (error: any) {
             console.error('Failed to save product', error);
-            alert(error.response?.data?.message || 'Failed to save product');
+            toast.error(error.response?.data?.message || 'Failed to save product');
         } finally {
             setLoading(false);
         }
@@ -97,6 +103,16 @@ export function ProductEditorPage() {
                     <p className="mt-1 text-xs text-red-500">
                         Do not include phone numbers or email addresses. Trust engine will reject.
                     </p>
+                </div>
+
+                <div>
+                    <ImageUpload
+                        value={formData.images}
+                        onChange={(newImages) => setFormData({ ...formData, images: newImages })}
+                        multiple={true}
+                        label="Product Images"
+                        maxFiles={5}
+                    />
                 </div>
 
                 <div className="grid grid-cols-2 gap-6">

@@ -9,6 +9,7 @@ export function SellerLayout() {
     const location = useLocation();
     const [shop, setShop] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         const checkShop = async () => {
@@ -61,41 +62,71 @@ export function SellerLayout() {
     ];
 
     return (
-        <div className="min-h-screen bg-gray-100 flex">
-            {/* Sidebar */}
-            <div className="w-64 bg-gray-900 text-white flex-shrink-0">
-                <div className="p-4 bg-gray-800 flex items-center justify-between">
-                    <span className="font-bold text-xl">Seller Center</span>
+        <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
+            {/* Mobile Header with Toggle */}
+            <div className="md:hidden bg-gray-900 text-white p-4 flex justify-between items-center">
+                <span className="font-bold text-xl">Seller Center</span>
+                <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+
+            {/* Mobile Sidebar Overlay */}
+            {isSidebarOpen && (
+                <div
+                    className="fixed inset-0 z-40 bg-gray-600 bg-opacity-75 md:hidden"
+                    onClick={() => setIsSidebarOpen(false)}
+                ></div>
+            )}
+
+            {/* Sidebar (Drawer on mobile, fixed on desktop) */}
+            <div className={`
+                fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 text-white transform transition-transform duration-300 ease-in-out
+                ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+                md:relative md:translate-x-0 md:flex-shrink-0
+            `}>
+                <div className="h-full flex flex-col">
+                    <div className="p-4 bg-gray-800 flex items-center justify-between">
+                        <span className="font-bold text-xl">Seller Center</span>
+                        <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-gray-400 hover:text-white">
+                            <span className="sr-only">Close sidebar</span>
+                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div className="p-4 border-b border-gray-700">
+                        <p className="text-sm font-medium text-gray-300">Shop:</p>
+                        <p className="font-bold truncate">{shop?.name}</p>
+                    </div>
+                    <nav className="mt-5 px-2 space-y-1 flex-1 overflow-y-auto">
+                        {navigation.map((item) => {
+                            const isActive = location.pathname.startsWith(item.href);
+                            return (
+                                <Link
+                                    key={item.name}
+                                    to={item.href}
+                                    onClick={() => setIsSidebarOpen(false)}
+                                    className={`${isActive
+                                        ? 'bg-gray-800 text-white'
+                                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                                        } group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
+                                >
+                                    {item.name}
+                                </Link>
+                            );
+                        })}
+                    </nav>
                 </div>
-                <div className="p-4 border-b border-gray-700">
-                    <p className="text-sm font-medium text-gray-300">Shop:</p>
-                    <p className="font-bold truncate">{shop?.name}</p>
-                </div>
-                <nav className="mt-5 px-2 space-y-1">
-                    {navigation.map((item) => {
-                        const isActive = location.pathname.startsWith(item.href);
-                        return (
-                            <Link
-                                key={item.name}
-                                to={item.href}
-                                className={`${isActive
-                                    ? 'bg-gray-800 text-white'
-                                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                                    } group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
-                            >
-                                {item.name}
-                            </Link>
-                        );
-                    })}
-                </nav>
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col">
-                <header className="bg-white shadow">
+            <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+                <header className="bg-white shadow hidden md:block">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                         <h1 className="text-2xl font-bold leading-tight text-gray-900">
-                            {/* Dynamic Header could go here */}
                             Dashboard
                         </h1>
                         <div className="flex items-center">
@@ -106,7 +137,7 @@ export function SellerLayout() {
                         </div>
                     </div>
                 </header>
-                <main className="flex-1 p-6 overflow-auto">
+                <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
                     <Outlet context={{ shop }} />
                 </main>
             </div>

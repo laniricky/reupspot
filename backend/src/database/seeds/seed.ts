@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
-import { query } from '../config/database';
-import { logger } from '../utils/logger';
+import { query } from '../../config/database';
+import { logger } from '../../utils/logger';
 
 const seed = async () => {
     try {

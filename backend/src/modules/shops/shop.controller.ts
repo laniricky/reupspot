@@ -5,10 +5,10 @@ import { shopService } from './shop.service';
 export class ShopController {
     async createShop(req: AuthRequest, res: Response, next: NextFunction) {
         try {
-            const { name, description } = req.body;
+            const { name, description, logoUrl, bannerUrl } = req.body;
             const ownerId = req.user!.id;
 
-            const shop = await shopService.createShop({ ownerId, name, description });
+            const shop = await shopService.createShop({ ownerId, name, description, logoUrl, bannerUrl });
 
             res.status(201).json(shop);
         } catch (error) {
@@ -31,7 +31,7 @@ export class ShopController {
     async updateShop(req: AuthRequest, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;
-            const updates = req.body;
+            const updates = req.body; // updates can now contain logoUrl, bannerUrl
             const ownerId = req.user!.id;
 
             const shop = await shopService.updateShop(id, ownerId, updates);

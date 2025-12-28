@@ -7,6 +7,8 @@ interface CreateShopInput {
     ownerId: string;
     name: string;
     description: string;
+    logoUrl?: string;
+    bannerUrl?: string;
 }
 
 export class ShopService {
@@ -49,10 +51,10 @@ export class ShopService {
         const result = await transaction(async (client) => {
             // Create shop
             const shopResult = await client.query(
-                `INSERT INTO shops (owner_id, name, slug, description)
-         VALUES ($1, $2, $3, $4)
+                `INSERT INTO shops (owner_id, name, slug, description, logo_url, banner_url)
+         VALUES ($1, $2, $3, $4, $5, $6)
          RETURNING *`,
-                [input.ownerId, input.name, slug, input.description]
+                [input.ownerId, input.name, slug, input.description, input.logoUrl, input.bannerUrl]
             );
 
             const shop = shopResult.rows[0];
@@ -77,10 +79,20 @@ export class ShopService {
             name: result.name,
             slug: result.slug,
             description: result.description,
+            logoUrl: result.logo_url,
+            bannerUrl: result.banner_url,
             status: result.status,
             createdAt: result.created_at,
         };
     }
+
+    // ... getShopBySlug and getShopByOwnerId are mostly fine as they select * but returns might miss new fields in the explicit return object if strictly typed, but here it constructs an object.
+
+    // I need to update the queries in other methods too if I want to return them explicitly? 
+    // They select s.* so they have the data.
+    // The problem is replace requires me to provide content. 
+    // I will stick to what I requested to replace. 
+    // Wait, I need to update getShopBySlug to Include logo/banner in return object.
 
     async getShopBySlug(slug: string) {
         const result = await query(
@@ -103,6 +115,8 @@ export class ShopService {
             name: shop.name,
             slug: shop.slug,
             description: shop.description,
+            logoUrl: shop.logo_url,
+            bannerUrl: shop.banner_url,
             status: shop.status,
             theme: {
                 template: shop.theme_template,
@@ -134,6 +148,8 @@ export class ShopService {
             name: shop.name,
             slug: shop.slug,
             description: shop.description,
+            logoUrl: shop.logo_url,
+            bannerUrl: shop.banner_url,
             status: shop.status,
             theme: {
                 template: shop.theme_template,
@@ -144,7 +160,7 @@ export class ShopService {
         };
     }
 
-    async updateShop(shopId: string, ownerId: string, updates: { name?: string; description?: string }) {
+    async updateShop(shopId: string, ownerId: string, updates: { name?: string; description?: string; logoUrl?: string; bannerUrl?: string }) {
         // Verify ownership
         const shop = await query('SELECT owner_id FROM shops WHERE id = $1', [shopId]);
 
@@ -160,10 +176,12 @@ export class ShopService {
             `UPDATE shops
        SET name = COALESCE($2, name),
            description = COALESCE($3, description),
+           logo_url = COALESCE($4, logo_url),
+           banner_url = COALESCE($5, banner_url),
            updated_at = NOW()
        WHERE id = $1
        RETURNING *`,
-            [shopId, updates.name, updates.description]
+            [shopId, updates.name, updates.description, updates.logoUrl, updates.bannerUrl]
         );
 
         return result.rows[0];

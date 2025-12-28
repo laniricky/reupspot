@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+export const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3000/api').replace('/api', '');
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 export const api = axios.create({
@@ -8,6 +9,13 @@ export const api = axios.create({
         'Content-Type': 'application/json',
     },
 });
+
+export const getImageUrl = (url?: string) => {
+    if (!url) return '';
+    if (url.startsWith('http') || url.startsWith('data:')) return url;
+    const cleanPath = url.startsWith('/') ? url.substring(1) : url;
+    return `${BASE_URL.replace(/\/$/, '')}/${cleanPath}`;
+};
 
 // Add a request interceptor to add the auth token to every request
 import { getDeviceFingerprint } from '../utils/fingerprint';

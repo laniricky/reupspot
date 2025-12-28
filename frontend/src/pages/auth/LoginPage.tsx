@@ -4,7 +4,7 @@ import { api } from '../../services/api';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 export function LoginPage() {
-    const [email, setEmail] = useState('');
+    const [emailOrPhone, setEmailOrPhone] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const { login } = useAuth();
@@ -19,7 +19,7 @@ export function LoginPage() {
         e.preventDefault();
         setError('');
         try {
-            const { data } = await api.post('/auth/login', { email, password });
+            const { data } = await api.post('/auth/login', { emailOrPhone, password });
             login(data.token, data.user);
             navigate(from, { replace: true });
         } catch (err: any) {
@@ -52,17 +52,17 @@ export function LoginPage() {
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email address
+                                Email address or Phone number
                             </label>
                             <div className="mt-1">
                                 <input
                                     id="email"
                                     name="email"
-                                    type="email"
+                                    type="text"
                                     autoComplete="email"
                                     required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={emailOrPhone}
+                                    onChange={(e) => setEmailOrPhone(e.target.value)}
                                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                 />
                             </div>

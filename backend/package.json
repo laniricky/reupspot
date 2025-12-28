@@ -7,8 +7,9 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "migrate": "node dist/database/migrate.js",
-    "seed": "node dist/database/seeds/seed.js",
+    "migrate": "ts-node --transpile-only src/database/migrate.ts",
+    "seed": "ts-node --transpile-only src/database/seeds/seed.ts",
+    "verify": "ts-node --transpile-only src/scripts/verify_system.ts",
     "test": "jest"
   },
   "keywords": [

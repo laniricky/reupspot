@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { api } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
+import { ImageUpload } from '../../components/common/ImageUpload';
+import { useToast } from '../../hooks/useToast';
 
 export function CreateShopPage() {
     const navigate = useNavigate();
+    const toast = useToast();
     const [formData, setFormData] = useState({
         name: '',
         description: '',
+        logoUrl: '',
+        bannerUrl: '',
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -18,8 +23,7 @@ export function CreateShopPage() {
 
         try {
             await api.post('/shops', formData);
-            // On success, redirect to seller dashboard
-            // Force reload or re-fetch auth context might be needed if user object changed, but here we just fetching shop
+            toast.success('Shop created successfully!');
             navigate('/seller/dashboard');
         } catch (err: any) {
             console.error('Failed to create shop', err);
@@ -79,6 +83,26 @@ export function CreateShopPage() {
                                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                 />
                             </div>
+                        </div>
+
+                        <div>
+                            <ImageUpload
+                                value={formData.logoUrl ? [formData.logoUrl] : []}
+                                onChange={(urls) => setFormData({ ...formData, logoUrl: urls[0] })}
+                                multiple={false}
+                                label="Shop Logo"
+                                maxFiles={1}
+                            />
+                        </div>
+
+                        <div>
+                            <ImageUpload
+                                value={formData.bannerUrl ? [formData.bannerUrl] : []}
+                                onChange={(urls) => setFormData({ ...formData, bannerUrl: urls[0] })}
+                                multiple={false}
+                                label="Shop Banner"
+                                maxFiles={1}
+                            />
                         </div>
 
                         <div>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { api } from '../services/api';
+import { api, getImageUrl } from '../services/api';
 import { useParams } from 'react-router-dom';
+import { LoadingSpinner } from '../components/common/LoadingSpinner';
+import { useToast } from '../hooks/useToast';
 
 interface Product {
     id: string;
@@ -20,6 +22,7 @@ export function ProductPage() {
     const [loading, setLoading] = useState(true);
     const [addingToCart, setAddingToCart] = useState(false);
     const [quantity, setQuantity] = useState(1);
+    const toast = useToast();
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -28,13 +31,14 @@ export function ProductPage() {
                 setProduct(response.data.product);
             } catch (error) {
                 console.error('Failed to fetch product', error);
+                toast.error('Failed to load product details');
             } finally {
                 setLoading(false);
             }
         };
 
         if (id) fetchProduct();
-    }, [id]);
+    }, [id, toast]);
 
     const handleAddToCart = async () => {
         if (!product) return;
@@ -44,17 +48,17 @@ export function ProductPage() {
                 productId: product.id,
                 quantity
             });
-            alert('Added to cart!');
+            toast.success('Added to cart!');
             // You might want to update some global cart state here
         } catch (error) {
             console.error('Failed to add to cart', error);
-            alert('Failed to add to cart');
+            toast.error('Failed to add to cart');
         } finally {
             setAddingToCart(false);
         }
     };
 
-    if (loading) return <div className="p-8 text-center">Loading product...</div>;
+    if (loading) return <div className="flex justify-center p-12"><LoadingSpinner size="lg" text="Loading product..." /></div>;
     if (!product) return <div className="p-8 text-center text-red-600">Product not found</div>;
 
     return (
@@ -63,7 +67,7 @@ export function ProductPage() {
                 {/* Images */}
                 <div className="bg-gray-100 rounded-lg h-96 flex items-center justify-center overflow-hidden">
                     {product.images && product.images[0] ? (
-                        <img src={product.images[0]} alt={product.name} className="h-full w-full object-cover" />
+                        <img src={getImageUrl(product.images[0])} alt={product.name} className="h-full w-full object-cover" />
                     ) : (
                         <span className="text-gray-400 text-lg">No Image Available</span>
                     )}

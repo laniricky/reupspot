@@ -45,7 +45,7 @@ export function BuyerLayout() {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="flex flex-col md:flex-row gap-6">
                         {/* Sidebar */}
-                        <aside className="w-full md:w-64 flex-shrink-0">
+                        <aside className="w-full md:w-64 flex-shrink-0 mb-6 md:mb-0">
                             <nav className="space-y-1">
                                 {navigation.map((item) => {
                                     const isActive = location.pathname === item.href;
