@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api } from '../services/api';
 import { useParams, Link } from 'react-router-dom';
 
@@ -23,10 +23,12 @@ export function ShopPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        console.log("ShopPage mounted, slug:", slug);
         const fetchShopData = async () => {
             try {
                 // Fetch shop details
                 const shopRes = await api.get(`/shops/${slug}`);
+                console.log("Shop data fetched:", shopRes.data);
                 setShop(shopRes.data.shop);
 
                 // Fetch shop products
@@ -48,7 +50,8 @@ export function ShopPage() {
     if (!shop) return <div className="p-8 text-center text-red-600">Shop not found</div>;
 
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-4 border-red-500 relative">
+            <div className="absolute top-0 left-0 bg-red-500 text-white px-2 py-1 text-xs">DEBUG MODE</div>
             <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
                 <h1 className="text-4xl font-bold text-gray-900 mb-2">{shop.name}</h1>
                 <p className="text-gray-600 text-lg">{shop.description}</p>

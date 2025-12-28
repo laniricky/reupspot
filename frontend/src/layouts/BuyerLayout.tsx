@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -54,8 +54,8 @@ export function BuyerLayout() {
                                             key={item.name}
                                             to={item.href}
                                             className={`${isActive
-                                                    ? 'bg-blue-50 text-blue-700'
-                                                    : 'text-gray-900 hover:bg-gray-50'
+                                                ? 'bg-blue-50 text-blue-700'
+                                                : 'text-gray-900 hover:bg-gray-50'
                                                 } group flex items-center px-4 py-2 text-sm font-medium rounded-md`}
                                         >
                                             {item.name}

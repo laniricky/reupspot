@@ -68,6 +68,16 @@ export class ShopController {
             next(error);
         }
     }
+
+    async getMyShop(req: AuthRequest, res: Response, next: NextFunction) {
+        try {
+            const ownerId = req.user!.id;
+            const shop = await shopService.getShopByOwnerId(ownerId);
+            res.json({ shop });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 export const shopController = new ShopController();

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api } from '../services/api';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useParams } from 'react-router-dom';
 
 interface Product {
     id: string;
@@ -17,8 +16,6 @@ interface Product {
 
 export function ProductPage() {
     const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
-    const { isAuthenticated } = useAuth();
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
     const [addingToCart, setAddingToCart] = useState(false);
@@ -102,8 +99,8 @@ export function ProductPage() {
                             onClick={handleAddToCart}
                             disabled={addingToCart || product.inventory_count === 0}
                             className={`w-full py-4 rounded-lg font-bold text-lg text-white transition-colors ${product.inventory_count === 0
-                                    ? 'bg-gray-400 cursor-not-allowed'
-                                    : 'bg-blue-600 hover:bg-blue-700'
+                                ? 'bg-gray-400 cursor-not-allowed'
+                                : 'bg-blue-600 hover:bg-blue-700'
                                 }`}
                         >
                             {product.inventory_count === 0

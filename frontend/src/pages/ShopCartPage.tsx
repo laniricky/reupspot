@@ -24,7 +24,7 @@ interface Cart {
 export function ShopCartPage() {
     const { shopId } = useParams<{ shopId: string }>();
     const navigate = useNavigate();
-    const { isAuthenticated, user } = useAuth();
+    const { isAuthenticated } = useAuth();
 
     const [cart, setCart] = useState<Cart | null>(null);
     const [loading, setLoading] = useState(true);

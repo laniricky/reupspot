@@ -9,6 +9,7 @@ const router = Router();
 router.get('/:slug', shopController.getShopBySlug.bind(shopController));
 
 // Protected routes (seller only)
+router.get('/me', authenticate, requireSeller, shopController.getMyShop.bind(shopController));
 router.post('/', authenticate, requireSeller, shopController.createShop.bind(shopController));
 router.put('/:id', authenticate, requireSeller, shopController.updateShop.bind(shopController));
 router.put('/:id/theme', authenticate, requireSeller, shopController.updateTheme.bind(shopController));

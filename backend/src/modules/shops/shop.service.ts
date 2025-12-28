@@ -113,6 +113,37 @@ export class ShopService {
         };
     }
 
+    async getShopByOwnerId(ownerId: string) {
+        const result = await query(
+            `SELECT s.*, st.theme_template, st.config as theme_config, ts.score as trust_score
+       FROM shops s
+       LEFT JOIN shop_themes st ON s.id = st.shop_id
+       LEFT JOIN trust_scores ts ON s.id = ts.shop_id
+       WHERE s.owner_id = $1`,
+            [ownerId]
+        );
+
+        if (result.rows.length === 0) {
+            return null;
+        }
+
+        const shop = result.rows[0];
+
+        return {
+            id: shop.id,
+            name: shop.name,
+            slug: shop.slug,
+            description: shop.description,
+            status: shop.status,
+            theme: {
+                template: shop.theme_template,
+                config: shop.theme_config,
+            },
+            trustScore: shop.trust_score || 50,
+            createdAt: shop.created_at,
+        };
+    }
+
     async updateShop(shopId: string, ownerId: string, updates: { name?: string; description?: string }) {
         // Verify ownership
         const shop = await query('SELECT owner_id FROM shops WHERE id = $1', [shopId]);

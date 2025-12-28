@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import { api } from '../../services/api';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 export function LoginPage() {
@@ -18,7 +19,8 @@ export function LoginPage() {
         e.preventDefault();
         setError('');
         try {
-            await login(email, password);
+            const { data } = await api.post('/auth/login', { email, password });
+            login(data.token, data.user);
             navigate(from, { replace: true });
         } catch (err: any) {
             console.error('Login failed', err);

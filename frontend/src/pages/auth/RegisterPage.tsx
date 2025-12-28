@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { api } from '../../services/api';
 import { useNavigate, Link } from 'react-router-dom';
 
 export function RegisterPage() {
+    useEffect(() => {
+        console.log("RegisterPage MOUNTED");
+    }, []);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -14,14 +17,14 @@ export function RegisterPage() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setError('');
 
@@ -55,6 +58,7 @@ export function RegisterPage() {
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+            <div className="bg-yellow-300 p-2 text-center font-bold text-red-600">DEBUG: REGISTER PAGE ACTIVE - IF YOU SEE THIS, IT IS RENDERING</div>
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
                     Create new account

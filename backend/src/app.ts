@@ -4,6 +4,7 @@ import { config } from './config/env';
 import { AppError } from './utils/errors';
 import { logger } from './utils/logger';
 import { generalLimiter } from './middleware/rateLimit';
+import { extractFingerprint } from './middleware/fingerprint';
 
 // Import routes
 import authRoutes from './modules/auth/auth.routes';
@@ -26,6 +27,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(extractFingerprint);
 app.use(generalLimiter);
 
 // Trust proxy (for getting real IP behind load balancer)

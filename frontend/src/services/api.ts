@@ -10,12 +10,26 @@ export const api = axios.create({
 });
 
 // Add a request interceptor to add the auth token to every request
+import { getDeviceFingerprint } from '../utils/fingerprint';
+
+// ... existing code ...
+
+// Add a request interceptor to add the auth token to every request
 api.interceptors.request.use(
-    (config) => {
+    async (config) => {
         const token = localStorage.getItem('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
+
+        // Add Device Fingerprint
+        let fingerprint = localStorage.getItem('device_fingerprint');
+        if (!fingerprint) {
+            fingerprint = await getDeviceFingerprint();
+            localStorage.setItem('device_fingerprint', fingerprint);
+        }
+        config.headers['X-Device-Fingerprint'] = fingerprint;
+
         return config;
     },
     (error) => {
