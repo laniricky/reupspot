@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { api } from '../../services/api';
 import { DataTable } from '../../components/common/DataTable';
 import { StatusBadge } from '../../components/common/StatusBadge';
-import { ConfirmationModal } from '../../components/common/ConfirmationModal';
 import { Filter, CheckCircle, XCircle } from 'lucide-react';
 import { LoadingSpinner } from '../../components/common/LoadingSpinner';
 

@@ -1,0 +1,24 @@
+{
+    "testSessions": {},
+    "testData": {
+        "buyers": [],
+        "sellers": [],
+        "shops": [],
+        "products": [],
+        "orders": []
+    },
+    "testResults": {
+        "phase1": {},
+        "phase2": {},
+        "phase3": {},
+        "phase4": {},
+        "phase5": {},
+        "phase6": {},
+        "phase7": {},
+        "phase8": {},
+        "phase9": {},
+        "phase10": {},
+        "phase11": {},
+        "phase12": {}
+    }
+}

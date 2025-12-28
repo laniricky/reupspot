@@ -69,7 +69,7 @@ export function SearchPage() {
                 />
                 <button
                     type="submit"
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-medium"
+                    className="bg-brand-600 text-white px-6 py-2 rounded-lg hover:bg-brand-700 font-medium"
                 >
                     Search
                 </button>
@@ -147,7 +147,7 @@ export function SearchPage() {
                                         </div>
                                         <h4 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">{product.name}</h4>
                                         <div className="mt-auto pt-4">
-                                            <p className="text-blue-600 font-bold text-lg">KSh {product.price.toLocaleString()}</p>
+                                            <p className="text-brand-600 font-bold text-lg">KSh {product.price.toLocaleString()}</p>
                                         </div>
                                     </div>
                                 </Link>

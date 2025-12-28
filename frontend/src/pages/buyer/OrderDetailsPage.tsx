@@ -49,7 +49,7 @@ export function OrderDetailsPage() {
     return (
         <div className="py-6 px-4 sm:px-6 lg:px-8">
             <div className="mb-6 flex items-center justify-between">
-                <Link to="/buyer/orders" className="text-blue-600 hover:text-blue-800">← Back to Orders</Link>
+                <Link to="/buyer/orders" className="text-brand-600 hover:text-brand-800">← Back to Orders</Link>
                 <h1 className="text-2xl font-bold text-gray-900">Order #{order.id?.slice(0, 8)}</h1>
             </div>
 

@@ -1,0 +1,58 @@
+{
+  "users": {
+    "buyer_basic": {
+      "id": "3c7f7377-f495-4538-8513-06ce0a5e8fad",
+      "email": "buyer.basic@test.com",
+      "password": "Test123!@#",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjN2Y3Mzc3LWY0OTUtNDUzOC04NTEzLTA2Y2UwYTVlOGZhZCIsImVtYWlsIjoiYnV5ZXIuYmFzaWNAdGVzdC5jb20iLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NjY5MjUxODEsImV4cCI6MTc2NzUyOTk4MX0.rUnID4kXZvQS7So8RM0juQp9n-K6p_X0S7E4BahqwMY",
+      "role": "buyer"
+    },
+    "buyer_repeat": {
+      "id": "711ed203-c477-4ea5-8566-9e5b302c0280",
+      "email": "buyer.repeat@test.com",
+      "password": "Test123!@#",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxMWVkMjAzLWM0NzctNGVhNS04NTY2LTllNWIzMDJjMDI4MCIsImVtYWlsIjoiYnV5ZXIucmVwZWF0QHRlc3QuY29tIiwicm9sZSI6ImJ1eWVyIiwiaWF0IjoxNzY2OTI1MTgxLCJleHAiOjE3Njc1Mjk5ODF9.HpwMx2DTpk3PLWifbyu2sPxtPvUHaqT9tTy89uRQ4Yw",
+      "role": "buyer"
+    },
+    "seller_new": {
+      "id": "b94a2928-b30e-4b10-9b8e-2f6bf2bb7427",
+      "email": "seller.new@test.com",
+      "password": "Test123!@#",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI5NGEyOTI4LWIzMGUtNGIxMC05YjhlLTJmNmJmMmJiNzQyNyIsImVtYWlsIjoic2VsbGVyLm5ld0B0ZXN0LmNvbSIsInJvbGUiOiJzZWxsZXIiLCJpYXQiOjE3NjY5MjUxODEsImV4cCI6MTc2NzUyOTk4MX0.7wAnWRjGBU0O6EaAjCQRFnCmcJNty9FjyQqPQ_pM0PU",
+      "role": "seller"
+    },
+    "seller_established": {
+      "id": "5bb427c2-19f3-45ac-8549-b883bb8ec12e",
+      "email": "seller.established@test.com",
+      "password": "Test123!@#",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjQyN2MyLTE5ZjMtNDVhYy04NTQ5LWI4ODNiYjhlYzEyZSIsImVtYWlsIjoic2VsbGVyLmVzdGFibGlzaGVkQHRlc3QuY29tIiwicm9sZSI6InNlbGxlciIsImlhdCI6MTc2NjkyNTE4MiwiZXhwIjoxNzY3NTI5OTgyfQ.0TXXHHYOBSFQxb_rtzTBH7_52alnapMUi9AnNRvvFdY",
+      "role": "seller"
+    },
+    "seller_bad": {
+      "id": "19c3d278-065e-40f0-a917-f66c1a4750e7",
+      "email": "seller.bad@test.com",
+      "password": "Test123!@#",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5YzNkMjc4LTA2NWUtNDBmMC1hOTE3LWY2NmMxYTQ3NTBlNyIsImVtYWlsIjoic2VsbGVyLmJhZEB0ZXN0LmNvbSIsInJvbGUiOiJzZWxsZXIiLCJpYXQiOjE3NjY5MjUxODIsImV4cCI6MTc2NzUyOTk4Mn0.xcYAwY1Ew9nl2F7erYJ0kJKDuV8assC3-dmY4lVFFP4",
+      "role": "seller"
+    }
+  },
+  "shops": {
+    "shop_new": {
+      "id": "b1fd1c83-55ba-4e30-9101-b5bf8d989baa",
+      "sellerId": "b94a2928-b30e-4b10-9b8e-2f6bf2bb7427",
+      "name": "New Shop"
+    },
+    "shop_trusted": {
+      "id": "f9187efd-0023-4429-90a2-2f0e26d7fbe4",
+      "sellerId": "5bb427c2-19f3-45ac-8549-b883bb8ec12e",
+      "name": "Trusted Shop"
+    },
+    "shop_flagged": {
+      "id": "adf65672-97cd-4ee4-b4eb-324b3ad94185",
+      "sellerId": "19c3d278-065e-40f0-a917-f66c1a4750e7",
+      "name": "Flagged Shop"
+    }
+  },
+  "products": {},
+  "orders": {}
+}

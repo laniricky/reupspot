@@ -20,20 +20,20 @@ export function Navbar() {
                 <div className="flex justify-between h-16">
                     {/* Logo and Desktop Nav */}
                     <div className="flex items-center">
-                        <Link to="/" onClick={closeMenu} className="text-2xl font-bold text-blue-600 flex items-center">
+                        <Link to="/" onClick={closeMenu} className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-accent-600 flex items-center hover:opacity-80 transition-opacity">
                             ReupSpot
                         </Link>
                         <div className="hidden md:flex ml-10 space-x-8">
                             <Link
                                 to="/shops"
-                                className={`flex items-center space-x-1 ${isActive('/shops') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
+                                className={`flex items-center space-x-1 ${isActive('/shops') ? 'text-brand-600' : 'text-gray-700 hover:text-brand-600'}`}
                             >
                                 <Store size={18} />
                                 <span>Shops</span>
                             </Link>
                             <Link
                                 to="/search"
-                                className={`flex items-center space-x-1 ${isActive('/search') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
+                                className={`flex items-center space-x-1 ${isActive('/search') ? 'text-brand-600' : 'text-gray-700 hover:text-brand-600'}`}
                             >
                                 <Search size={18} />
                                 <span>Search</span>
@@ -48,10 +48,10 @@ export function Navbar() {
                                 <NotificationBadge />
                                 <span className="text-gray-700 text-sm">Hi, {user?.email}</span>
                                 {user?.role === 'buyer' && (
-                                    <Link to="/buyer/dashboard" className="text-gray-700 hover:text-blue-600 font-medium">Dashboard</Link>
+                                    <Link to="/buyer/dashboard" className="text-gray-700 hover:text-brand-600 font-medium">Dashboard</Link>
                                 )}
                                 {user?.role === 'seller' && (
-                                    <Link to="/seller/dashboard" className="text-gray-700 hover:text-blue-600 font-medium">Dashboard</Link>
+                                    <Link to="/seller/dashboard" className="text-gray-700 hover:text-brand-600 font-medium">Dashboard</Link>
                                 )}
                                 <button
                                     onClick={() => { logout(); }}
@@ -62,12 +62,12 @@ export function Navbar() {
                             </>
                         ) : (
                             <>
-                                <Link to="/login" className="text-gray-700 hover:text-blue-600 font-medium">
+                                <Link to="/login" className="text-gray-700 hover:text-brand-600 font-medium">
                                     Login
                                 </Link>
                                 <Link
                                     to="/register"
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                                    className="bg-brand-600 text-white px-4 py-2 rounded-md hover:bg-brand-700 transition-colors"
                                 >
                                     Register
                                 </Link>
@@ -79,7 +79,7 @@ export function Navbar() {
                     <div className="flex items-center md:hidden">
                         <button
                             onClick={toggleMenu}
-                            className="text-gray-700 hover:text-blue-600 focus:outline-none"
+                            className="text-gray-700 hover:text-brand-600 focus:outline-none"
                         >
                             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
@@ -94,7 +94,7 @@ export function Navbar() {
                         <Link
                             to="/shops"
                             onClick={closeMenu}
-                            className={`flex items-center space-x-3 px-3 py-3 rounded-md ${isActive('/shops') ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
+                            className={`flex items-center space-x-3 px-3 py-3 rounded-md ${isActive('/shops') ? 'bg-brand-50 text-brand-600' : 'text-gray-700 hover:bg-gray-50'}`}
                         >
                             <Store size={20} />
                             <span>Shops</span>
@@ -102,7 +102,7 @@ export function Navbar() {
                         <Link
                             to="/search"
                             onClick={closeMenu}
-                            className={`flex items-center space-x-3 px-3 py-3 rounded-md ${isActive('/search') ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
+                            className={`flex items-center space-x-3 px-3 py-3 rounded-md ${isActive('/search') ? 'bg-brand-50 text-brand-600' : 'text-gray-700 hover:bg-gray-50'}`}
                         >
                             <Search size={20} />
                             <span>Search Products</span>
@@ -141,7 +141,7 @@ export function Navbar() {
                                     <Link
                                         to="/register"
                                         onClick={closeMenu}
-                                        className="flex items-center space-x-3 px-3 py-3 rounded-md text-blue-600 hover:bg-blue-50"
+                                        className="flex items-center space-x-3 px-3 py-3 rounded-md text-brand-600 hover:bg-brand-50"
                                     >
                                         <UserPlus size={20} />
                                         <span>Register</span>

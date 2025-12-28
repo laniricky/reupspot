@@ -1,0 +1,167 @@
+{
+  "buyers": [
+    {
+      "email": "buyer-test-1766923951052@test.com",
+      "password": "BuyerTest123!",
+      "role": "buyer",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDhmZmQxLWYzZGUtNDM4Zi04MTM2LTY3ZWU5ZTEzMmQ3MiIsImVtYWlsIjoiYnV5ZXItdGVzdC0xNzY2OTIzOTUxMDUyQHRlc3QuY29tIiwicm9sZSI6ImJ1eWVyIiwiaWF0IjoxNzY2OTIzOTUxLCJleHAiOjE3Njc1Mjg3NTF9.rumQ0Xq4kEeJ7CPxp4vJN1uHS24DV2V2gc-AvCcKl7U",
+      "id": "69d8ffd1-f3de-438f-8136-67ee9e132d72"
+    }
+  ],
+  "sellers": [
+    {
+      "email": "seller-test-1766923951405@test.com",
+      "password": "SellerTest123!",
+      "role": "seller",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQyNGExMGM0LTFhYzctNDVjMi05ODAyLWYzYWZjYzhmODgzNSIsImVtYWlsIjoic2VsbGVyLXRlc3QtMTc2NjkyMzk1MTQwNUB0ZXN0LmNvbSIsInJvbGUiOiJzZWxsZXIiLCJpYXQiOjE3NjY5MjM5NTEsImV4cCI6MTc2NzUyODc1MX0.4kwz_-zMJZeHMt_a3htH_S5U2YN4gERBOhFq-0PkdUI",
+      "id": "d24a10c4-1ac7-45c2-9802-f3afcc8f8835"
+    }
+  ],
+  "shops": [
+    {
+      "id": "a26a35c4-94a3-4d51-aa02-5aeee0bd2b8b",
+      "name": "Test Shop 1766923951667",
+      "slug": "test-shop-1766923951667",
+      "description": "A test shop for functional testing",
+      "logoUrl": "/uploads/test-logo.png",
+      "bannerUrl": "/uploads/test-banner.png",
+      "status": "active",
+      "createdAt": "2025-12-28T12:12:31.703Z",
+      "sellerId": "d24a10c4-1ac7-45c2-9802-f3afcc8f8835"
+    }
+  ],
+  "products": [],
+  "orders": [],
+  "results": [
+    {
+      "timestamp": "2025-12-28T12:12:31.051Z",
+      "phase": "PHASE_1",
+      "test": "Backend Health Check",
+      "status": "PASS",
+      "details": {
+        "status": {
+          "status": "ok",
+          "timestamp": "2025-12-28T12:12:31.018Z"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-12-28T12:12:31.404Z",
+      "phase": "PHASE_2",
+      "test": "Buyer Registration",
+      "status": "PASS",
+      "details": {
+        "email": "buyer-test-1766923951052@test.com"
+      }
+    },
+    {
+      "timestamp": "2025-12-28T12:12:31.598Z",
+      "phase": "PHASE_2",
+      "test": "Seller Registration",
+      "status": "PASS",
+      "details": {
+        "email": "seller-test-1766923951405@test.com"
+      }
+    },
+    {
+      "timestamp": "2025-12-28T12:12:31.637Z",
+      "phase": "PHASE_2",
+      "test": "Buyer Login",
+      "status": "FAIL",
+      "details": {
+        "error": {
+          "error": "Invalid credentials",
+          "statusCode": 401
+        }
+      }
+    },
+    {
+      "timestamp": "2025-12-28T12:12:31.666Z",
+      "phase": "PHASE_2",
+      "test": "Role Enforcement (Buyer→Seller)",
+      "status": "PASS",
+      "details": {
+        "blocked": true,
+        "status": 403
+      }
+    },
+    {
+      "timestamp": "2025-12-28T12:12:31.732Z",
+      "phase": "PHASE_3",
+      "test": "Shop Creation",
+      "status": "PASS",
+      "details": {
+        "shopId": "a26a35c4-94a3-4d51-aa02-5aeee0bd2b8b",
+        "slug": "test-shop-1766923951667"
+      }
+    },
+    {
+      "timestamp": "2025-12-28T12:12:31.760Z",
+      "phase": "PHASE_3",
+      "test": "Shop Public Access",
+      "status": "PASS",
+      "details": {
+        "accessible": true,
+        "shopName": "Test Shop 1766923951667"
+      }
+    },
+    {
+      "timestamp": "2025-12-28T12:12:31.875Z",
+      "phase": "PHASE_3",
+      "test": "Multi-Shop Spam Protection",
+      "status": "PASS",
+      "details": {
+        "shopsCreated": 0,
+        "expected": 1
+      }
+    },
+    {
+      "timestamp": "2025-12-28T12:12:32.232Z",
+      "phase": "PHASE_4",
+      "test": "Product Creation (Normal)",
+      "status": "FAIL",
+      "details": {
+        "error": {
+          "error": "null value in column \"name\" of relation \"products\" violates not-null constraint",
+          "statusCode": 500
+        }
+      }
+    },
+    {
+      "timestamp": "2025-12-28T12:12:32.343Z",
+      "phase": "PHASE_4",
+      "test": "Restricted Product Block (Phone)",
+      "status": "UNKNOWN",
+      "details": {
+        "error": {
+          "error": "New sellers cannot list products in the \"electronics\" category. This restriction lifts after 7 days of activity.",
+          "statusCode": 400
+        }
+      }
+    },
+    {
+      "timestamp": "2025-12-28T12:12:32.428Z",
+      "phase": "PHASE_4",
+      "test": "Price Validation (Zero Price)",
+      "status": "UNKNOWN",
+      "details": {
+        "error": {
+          "error": "null value in column \"name\" of relation \"products\" violates not-null constraint",
+          "statusCode": 500
+        }
+      }
+    },
+    {
+      "timestamp": "2025-12-28T12:12:32.560Z",
+      "phase": "PHASE_4",
+      "test": "Price Validation (Negative)",
+      "status": "UNKNOWN",
+      "details": {
+        "error": {
+          "error": "null value in column \"name\" of relation \"products\" violates not-null constraint",
+          "statusCode": 500
+        }
+      }
+    }
+  ]
+}

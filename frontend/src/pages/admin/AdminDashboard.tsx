@@ -33,7 +33,7 @@ export function AdminDashboard() {
     if (!stats) return <div className="text-red-500">Failed to load payload.</div>;
 
     const cards = [
-        { label: 'Total Users', value: stats.totalUsers, icon: <Users size={24} />, color: 'bg-blue-500' },
+        { label: 'Total Users', value: stats.totalUsers, icon: <Users size={24} />, color: 'bg-brand-500' },
         { label: 'Total Shops', value: stats.totalShops, icon: <ShoppingBag size={24} />, color: 'bg-purple-500' },
         { label: 'Active Shops', value: stats.activeShops, icon: <Activity size={24} />, color: 'bg-green-500' },
         { label: 'Total Revenue', value: `$${stats.totalRevenue}`, icon: <DollarSign size={24} />, color: 'bg-yellow-500' },
