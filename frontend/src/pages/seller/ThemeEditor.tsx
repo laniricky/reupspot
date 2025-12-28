@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { api } from '../../services/api';
+import { ImageUpload } from '../../components/common/ImageUpload';
 
 interface Shop {
     id: string;
+    logo_url?: string;
+    banner_url?: string;
     theme?: {
         config: any;
     };
@@ -17,11 +20,21 @@ export function ThemeEditor() {
         fontFamily: 'Inter, sans-serif',
         layoutMode: 'grid'
     });
+    const [branding, setBranding] = useState({
+        logo: [] as string[],
+        banner: [] as string[]
+    });
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (shop?.theme?.config) {
             setConfig({ ...config, ...shop.theme.config });
+        }
+        if (shop) {
+            setBranding({
+                logo: shop.logo_url ? [shop.logo_url] : [],
+                banner: shop.banner_url ? [shop.banner_url] : []
+            });
         }
     }, [shop]);
 
@@ -33,9 +46,19 @@ export function ThemeEditor() {
         e.preventDefault();
         setLoading(true);
         try {
+            // Update theme config
             await api.put(`/shops/${shop.id}/theme`, config);
-            alert('Theme updated successfully!');
-            // Force page reload to reflect theme maybe? internal state update is enough for editor.
+
+            // Update branding
+            const brandingUpdates = {
+                logoUrl: branding.logo[0] || null,
+                bannerUrl: branding.banner[0] || null
+            };
+            await api.put(`/shops/${shop.id}`, brandingUpdates);
+
+            alert('Store appearance updated successfully!');
+            // Reload to reflect changes
+            window.location.reload();
         } catch (error) {
             console.error('Failed to update theme', error);
             alert('Failed to update theme');
@@ -50,8 +73,35 @@ export function ThemeEditor() {
 
             <form onSubmit={handleSave} className="bg-white shadow sm:rounded-lg p-6 space-y-6">
 
-                {/* Colors */}
+                {/* Branding */}
                 <div>
+                    <h3 className="text-lg font-medium text-gray-900 mb-4">Branding</h3>
+                    <div className="space-y-4">
+                        <div>
+                            <ImageUpload
+                                label="Store Logo"
+                                value={branding.logo}
+                                onChange={(urls) => setBranding({ ...branding, logo: urls })}
+                                multiple={false}
+                                maxFiles={1}
+                            />
+                            <p className="mt-1 text-xs text-gray-500">Recommended size: 200x200px (Square)</p>
+                        </div>
+                        <div>
+                            <ImageUpload
+                                label="Store Banner"
+                                value={branding.banner}
+                                onChange={(urls) => setBranding({ ...branding, banner: urls })}
+                                multiple={false}
+                                maxFiles={1}
+                            />
+                            <p className="mt-1 text-xs text-gray-500">Recommended size: 1200x300px (Wide)</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Colors */}
+                <div className="border-t border-gray-200 pt-6">
                     <h3 className="text-lg font-medium text-gray-900 mb-4">Colors</h3>
                     <div className="grid grid-cols-2 gap-6">
                         <div>
@@ -154,3 +204,4 @@ export function ThemeEditor() {
         </div>
     );
 }
+

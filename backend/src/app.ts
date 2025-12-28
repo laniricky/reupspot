@@ -20,6 +20,7 @@ import cartRoutes from './modules/cart/cart.routes';
 import trustRoutes from './modules/trust/trust.routes';
 import uploadRoutes from './modules/upload/upload.routes';
 import notificationRoutes from './modules/notifications/notification.routes';
+import adminRoutes from './modules/admin/admin.routes';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
@@ -58,6 +59,7 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/trust', trustRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/admin', adminRoutes);
 
 // 404 handler
 app.use((_req, res) => {

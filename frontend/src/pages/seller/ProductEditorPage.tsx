@@ -3,7 +3,7 @@ import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 import { api } from '../../services/api';
 import { useToast } from '../../hooks/useToast';
 import { ImageUpload } from '../../components/common/ImageUpload';
-import { LoadingSpinner } from '../../components/common/LoadingSpinner';
+
 
 interface Shop {
     id: string;

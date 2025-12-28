@@ -66,6 +66,8 @@ async function runTests() {
         return !!token;
     });
 
+    let shopSlug = 'tech-haven';
+
     // 4. Create Shop (requires auth)
     await testEndpoint('Create Shop', async () => {
         try {
@@ -81,16 +83,18 @@ async function runTests() {
                 }
             );
             shopId = response.data.shop.id;
+            shopSlug = response.data.shop.slug;
             return !!shopId;
         } catch (e: any) {
             // Shop might already exist
             if (e.response?.status === 409) {
                 log('  Shop already exists for this user, fetching existing...');
-                const shops = await axios.get(`${BASE_URL}/shops/my`, {
+                const shops = await axios.get(`${BASE_URL}/shops/me`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                if (shops.data.shops && shops.data.shops.length > 0) {
-                    shopId = shops.data.shops[0].id;
+                if (shops.data.shop) {
+                    shopId = shops.data.shop.id;
+                    shopSlug = shops.data.shop.slug;
                     return true;
                 }
             }
@@ -100,8 +104,8 @@ async function runTests() {
 
     // 5. Get Public Shop
     await testEndpoint('Get Public Shop Page', async () => {
-        const response = await axios.get(`${BASE_URL}/shops/tech-haven`);
-        return response.data.shop.slug === 'tech-haven';
+        const response = await axios.get(`${BASE_URL}/shops/${shopSlug}`);
+        return response.data.shop.slug === shopSlug;
     });
 
     // 6. Create Product

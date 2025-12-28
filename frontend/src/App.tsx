@@ -29,11 +29,23 @@ import { SellerOrderDetailsPage } from './pages/seller/SellerOrderDetailsPage';
 import { ThemeEditor } from './pages/seller/ThemeEditor';
 import { PayoutPage } from './pages/seller/PayoutPage';
 import { Navbar } from './components/common/Navbar';
+import { AdminLayout } from './layouts/AdminLayout';
+import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { UserManagementPage } from './pages/admin/UserManagementPage';
+import { ShopManagementPage } from './pages/admin/ShopManagementPage';
+import { DisputeManagementPage } from './pages/admin/DisputeManagementPage';
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
     const { isAuthenticated, isLoading } = useAuth();
     if (isLoading) return <LoadingSpinner size="lg" text="Authenticating..." />;
     return isAuthenticated ? children : <Navigate to="/login" replace />;
+}
+
+function ProtectedAdminRoute({ children }: { children: JSX.Element }) {
+    const { user, isAuthenticated, isLoading } = useAuth();
+    if (isLoading) return <LoadingSpinner size="lg" text="Authenticating..." />;
+    if (!isAuthenticated) return <Navigate to="/login" replace />;
+    return user?.role === 'admin' ? children : <Navigate to="/" replace />;
 }
 
 function App() {
@@ -83,6 +95,15 @@ function App() {
                                             <Route path="orders/:orderId" element={<SellerOrderDetailsPage />} />
                                             <Route path="settings" element={<ThemeEditor />} />
                                             <Route path="payouts" element={<PayoutPage />} />
+                                        </Route>
+
+                                        {/* Admin Dashboard */}
+                                        <Route path="/admin" element={<ProtectedAdminRoute><AdminLayout /></ProtectedAdminRoute>}>
+                                            <Route path="dashboard" element={<AdminDashboard />} />
+                                            <Route path="users" element={<UserManagementPage />} />
+                                            <Route path="shops" element={<ShopManagementPage />} />
+                                            <Route path="disputes" element={<DisputeManagementPage />} />
+                                            <Route path="settings" element={<div className="p-4">Admin Settings (Coming Soon)</div>} />
                                         </Route>
                                     </Routes>
                                 </ErrorBoundary>

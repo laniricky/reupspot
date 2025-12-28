@@ -1,6 +1,6 @@
 import { useNotifications } from '../../contexts/NotificationContext';
 import { Check, Info, AlertTriangle, Package, CheckCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 interface NotificationDropdownProps {
     onClose: () => void;
@@ -8,7 +8,7 @@ interface NotificationDropdownProps {
 
 export function NotificationDropdown({ onClose }: NotificationDropdownProps) {
     const { notifications, markAsRead, markAllAsRead, unreadCount } = useNotifications();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleNotificationClick = async (notification: any) => {
         if (!notification.read) {
