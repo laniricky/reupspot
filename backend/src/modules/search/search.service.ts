@@ -52,7 +52,7 @@ export class SearchService {
         let paramIndex = 1;
 
         // Build WHERE conditions
-        const conditions: string[] = ['p.deleted = false', "p.status = 'approved'"];
+        const conditions: string[] = ['p.deleted = false', "p.status = 'active'"];
 
         // Full-text search condition
         if (query && query.trim()) {
@@ -190,7 +190,7 @@ export class SearchService {
             `SELECT category, COUNT(*) as count
              FROM products p
              JOIN shops s ON p.shop_id = s.id
-             WHERE p.deleted = false AND p.status = 'approved' AND s.status = 'active'
+             WHERE p.deleted = false AND p.status = 'active' AND s.status = 'active'
              GROUP BY category
              ORDER BY count DESC`
         );
@@ -209,7 +209,7 @@ export class SearchService {
             SELECT MIN(price) as min, MAX(price) as max
             FROM products p
             JOIN shops s ON p.shop_id = s.id
-            WHERE p.deleted = false AND p.status = 'approved' AND s.status = 'active'
+            WHERE p.deleted = false AND p.status = 'active' AND s.status = 'active'
         `;
         const params: any[] = [];
 

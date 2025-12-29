@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { api } from '../services/api';
+import { api, getImageUrl } from '../services/api';
 import { Link } from 'react-router-dom';
 import { Store } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
@@ -10,6 +10,7 @@ interface Shop {
     description: string;
     slug: string;
     logo_url?: string;
+    banner_url?: string;
 }
 
 export function ShopListPage() {
@@ -65,26 +66,62 @@ export function ShopListPage() {
                             <Link
                                 key={shop.id}
                                 to={`/shop/${shop.slug}`}
-                                className="group bg-white/80 backdrop-blur-md rounded-2xl shadow-sm hover:shadow-xl border border-white/50 p-6 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full ring-1 ring-surface-900/5"
+                                className="group relative rounded-2xl shadow-sm hover:shadow-2xl overflow-hidden hover:-translate-y-1 transition-all duration-300 h-64 ring-1 ring-surface-900/5"
                             >
-                                <div className="flex items-center mb-6">
-                                    <div className="h-16 w-16 bg-gradient-to-br from-brand-100 to-brand-50 rounded-2xl flex items-center justify-center text-brand-600 font-bold text-2xl shadow-inner group-hover:scale-105 transition-transform duration-300 ring-1 ring-brand-200">
-                                        {shop.logo_url ? (
-                                            <img src={shop.logo_url} alt={shop.name} className="h-full w-full object-cover rounded-2xl" />
-                                        ) : (
-                                            shop.name.charAt(0).toUpperCase()
-                                        )}
-                                    </div>
-                                    <div className="ml-4 flex-1 min-w-0">
-                                        <h3 className="text-xl font-bold text-surface-900 group-hover:text-brand-600 transition-colors truncate">{shop.name}</h3>
-                                        <div className="flex items-center text-xs text-brand-600 font-medium mt-1 bg-brand-50 px-2 py-0.5 rounded-full w-fit border border-brand-100">
-                                            Verified Seller
+                                {/* Banner Background with Blur */}
+                                <div className="absolute inset-0">
+                                    {shop.banner_url ? (
+                                        <>
+                                            <img
+                                                src={getImageUrl(shop.banner_url)}
+                                                alt={`${shop.name} banner`}
+                                                className="w-full h-full object-cover"
+                                            />
+                                            <div className="absolute inset-0 backdrop-blur-md bg-white/30"></div>
+                                        </>
+                                    ) : (
+                                        <div className="w-full h-full bg-gradient-to-br from-brand-100 via-accent-50 to-brand-50">
+                                            <div className="absolute inset-0 backdrop-blur-sm bg-white/40"></div>
+                                        </div>
+                                    )}
+                                    {/* Gradient overlay for text readability */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                                </div>
+
+                                {/* Content */}
+                                <div className="relative h-full flex flex-col justify-between p-6">
+                                    {/* Top section with profile picture */}
+                                    <div className="flex items-start justify-between">
+                                        <div className="h-20 w-20 rounded-2xl overflow-hidden shadow-xl ring-4 ring-white/90 bg-white group-hover:scale-105 transition-transform duration-300">
+                                            {shop.logo_url ? (
+                                                <img
+                                                    src={getImageUrl(shop.logo_url)}
+                                                    alt={shop.name}
+                                                    className="h-full w-full object-cover"
+                                                />
+                                            ) : (
+                                                <div className="h-full w-full bg-gradient-to-br from-brand-600 to-brand-400 flex items-center justify-center text-white font-bold text-3xl">
+                                                    {shop.name.charAt(0).toUpperCase()}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="flex items-center text-xs text-white font-semibold px-3 py-1.5 rounded-full bg-green-500/90 backdrop-blur-sm shadow-lg border border-white/30">
+                                            ✓ Verified
                                         </div>
                                     </div>
-                                </div>
-                                <p className="text-surface-600 line-clamp-2 mb-6 text-sm leading-relaxed flex-grow">{shop.description}</p>
-                                <div className="flex items-center text-brand-600 font-semibold text-sm group-hover:translate-x-1 transition-transform mt-auto">
-                                    Visit Shop <span className="ml-1">→</span>
+
+                                    {/* Bottom section with shop info */}
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-brand-100 transition-colors drop-shadow-lg">
+                                            {shop.name}
+                                        </h3>
+                                        <p className="text-white/95 text-sm leading-relaxed line-clamp-2 mb-3 drop-shadow-md">
+                                            {shop.description}
+                                        </p>
+                                        <div className="flex items-center text-white font-semibold text-sm group-hover:translate-x-1 transition-transform">
+                                            Visit Shop <span className="ml-1">→</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </Link>
                         ))}
