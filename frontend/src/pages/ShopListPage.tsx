@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { api } from '../services/api';
 import { Link } from 'react-router-dom';
 import { Store } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 interface Shop {
     id: string;
@@ -18,8 +19,8 @@ export function ShopListPage() {
     useEffect(() => {
         const fetchShops = async () => {
             try {
-                // Using search endpoint to list shops for now
-                const response = await api.get('/search/shops?q=');
+                // Fetch all shops
+                const response = await api.get('/search/shops?q=&limit=20');
                 setShops(response.data.shops || []);
             } catch (error) {
                 console.error('Failed to fetch shops', error);
@@ -38,24 +39,20 @@ export function ShopListPage() {
     );
 
     return (
-        <div className="min-h-screen">
-            {/* Hero Section */}
-            <div className="bg-gradient-to-r from-brand-600 to-accent-600 text-white py-20 px-4 sm:px-6 lg:px-8 mb-12 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-                <div className="max-w-7xl mx-auto relative z-10 text-center">
-                    <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-                        Discover Unique Shops
-                    </h1>
-                    <p className="text-xl md:text-2xl text-brand-100 max-w-2xl mx-auto animate-slide-up">
-                        Explore curated collections from our top independent sellers.
-                    </p>
-                </div>
-            </div>
+        <div className="min-h-screen pt-16">
+            <Helmet>
+                <title>All Shops | ReupSpot</title>
+                <meta name="description" content="Browse all independent shops and sellers on ReupSpot." />
+            </Helmet>
 
-            {/* Shop Grid */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div className="mb-8">
+                    <h1 className="text-3xl font-bold text-surface-900">All Shops</h1>
+                    <p className="text-surface-500 mt-2">Discover our community of independent sellers.</p>
+                </div>
+
                 {shops.length === 0 ? (
-                    <div className="text-center py-20 bg-white/50 backdrop-blur-sm rounded-2xl border border-surface-200">
+                    <div className="text-center py-20 bg-white/50 backdrop-blur-sm rounded-3xl border border-surface-200">
                         <div className="text-surface-400 mb-4">
                             <Store size={48} className="mx-auto opacity-50" />
                         </div>
@@ -63,30 +60,30 @@ export function ShopListPage() {
                         <p className="text-surface-500 mt-2">Check back soon for new arrivals!</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
                         {shops.map((shop) => (
                             <Link
                                 key={shop.id}
                                 to={`/shop/${shop.slug}`}
-                                className="group bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-surface-100 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                                className="group bg-white/80 backdrop-blur-md rounded-2xl shadow-sm hover:shadow-xl border border-white/50 p-6 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full ring-1 ring-surface-900/5"
                             >
                                 <div className="flex items-center mb-6">
-                                    <div className="h-16 w-16 bg-gradient-to-br from-brand-100 to-brand-50 rounded-2xl flex items-center justify-center text-brand-600 font-bold text-2xl shadow-inner group-hover:scale-105 transition-transform duration-300">
+                                    <div className="h-16 w-16 bg-gradient-to-br from-brand-100 to-brand-50 rounded-2xl flex items-center justify-center text-brand-600 font-bold text-2xl shadow-inner group-hover:scale-105 transition-transform duration-300 ring-1 ring-brand-200">
                                         {shop.logo_url ? (
                                             <img src={shop.logo_url} alt={shop.name} className="h-full w-full object-cover rounded-2xl" />
                                         ) : (
                                             shop.name.charAt(0).toUpperCase()
                                         )}
                                     </div>
-                                    <div className="ml-4">
-                                        <h3 className="text-xl font-bold text-surface-900 group-hover:text-brand-600 transition-colors">{shop.name}</h3>
-                                        <div className="flex items-center text-xs text-brand-600 font-medium mt-1 bg-brand-50 px-2 py-0.5 rounded-full w-fit">
+                                    <div className="ml-4 flex-1 min-w-0">
+                                        <h3 className="text-xl font-bold text-surface-900 group-hover:text-brand-600 transition-colors truncate">{shop.name}</h3>
+                                        <div className="flex items-center text-xs text-brand-600 font-medium mt-1 bg-brand-50 px-2 py-0.5 rounded-full w-fit border border-brand-100">
                                             Verified Seller
                                         </div>
                                     </div>
                                 </div>
-                                <p className="text-surface-600 line-clamp-2 mb-6 h-10 text-sm leading-relaxed">{shop.description}</p>
-                                <div className="flex items-center text-brand-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
+                                <p className="text-surface-600 line-clamp-2 mb-6 text-sm leading-relaxed flex-grow">{shop.description}</p>
+                                <div className="flex items-center text-brand-600 font-semibold text-sm group-hover:translate-x-1 transition-transform mt-auto">
                                     Visit Shop <span className="ml-1">→</span>
                                 </div>
                             </Link>

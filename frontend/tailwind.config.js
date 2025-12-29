@@ -8,26 +8,26 @@ export default {
         extend: {
             colors: {
                 brand: {
-                    50: '#f5f3ff',
-                    100: '#ede9fe',
-                    200: '#ddd6fe',
-                    300: '#c4b5fd',
-                    400: '#a78bfa',
-                    500: '#8b5cf6', // Violet - Primary
-                    600: '#7c3aed',
-                    700: '#6d28d9',
-                    800: '#5b21b6',
-                    900: '#4c1d95',
+                    50: '#fbf7f6',
+                    100: '#f5eeeb',
+                    200: '#eadcd7',
+                    300: '#dbc1b8',
+                    400: '#c59d90',
+                    500: '#a77665', // Primary Brown
+                    600: '#945f4f',
+                    700: '#7c4b3d',
+                    800: '#673e33',
+                    900: '#55342d',
                 },
                 accent: {
-                    500: '#ec4899', // Pink - Secondary / Action
-                    600: '#db2777',
+                    500: '#d97706', // Amber/Gold
+                    600: '#b45309',
                 },
                 surface: {
-                    50: '#f8fafc',
-                    100: '#f1f5f9',
-                    200: '#e2e8f0',
-                    900: '#0f172a',
+                    50: '#fafaf9', // Stone 50
+                    100: '#f5f5f4', // Stone 100
+                    200: '#e7e5e4', // Stone 200
+                    900: '#1c1917', // Stone 900
                 }
             },
             fontFamily: {

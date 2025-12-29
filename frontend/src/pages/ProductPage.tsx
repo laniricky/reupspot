@@ -3,6 +3,7 @@ import { api, getImageUrl } from '../services/api';
 import { useParams } from 'react-router-dom';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
 import { useToast } from '../hooks/useToast';
+import { Button } from '../components/common/Button';
 
 interface Product {
     id: string;
@@ -62,57 +63,56 @@ export function ProductPage() {
     if (!product) return <div className="p-8 text-center text-red-600">Product not found</div>;
 
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-24">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 {/* Images */}
-                <div className="bg-gray-100 rounded-lg h-96 flex items-center justify-center overflow-hidden">
+                <div className="bg-surface-50 rounded-2xl h-96 flex items-center justify-center overflow-hidden border border-surface-200 shadow-inner">
                     {product.images && product.images[0] ? (
                         <img src={getImageUrl(product.images[0])} alt={product.name} className="h-full w-full object-cover" />
                     ) : (
-                        <span className="text-gray-400 text-lg">No Image Available</span>
+                        <span className="text-surface-400 text-lg">No Image Available</span>
                     )}
                 </div>
 
                 {/* Details */}
                 <div>
-                    <div className="mb-2 text-sm text-gray-500">
-                        Sold by <a href={`/shop/${product.shop_slug}`} className="text-blue-600 hover:underline">{product.shop_name}</a>
+                    <div className="mb-2 text-sm text-surface-500 font-medium">
+                        Sold by <a href={`/shop/${product.shop_slug}`} className="text-brand-600 hover:text-brand-700 hover:underline transition-colors">{product.shop_name}</a>
                     </div>
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
-                    <p className="text-3xl font-bold text-blue-600 mb-6">KSh {product.price.toLocaleString()}</p>
+                    <h1 className="text-4xl font-bold text-surface-900 mb-4 tracking-tight">{product.name}</h1>
+                    <p className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-accent-600 mb-6">KSh {product.price.toLocaleString()}</p>
 
-                    <div className="prose prose-blue mb-8">
+                    <div className="prose prose-brand mb-8 text-surface-600 leading-relaxed">
                         <p>{product.description}</p>
                     </div>
 
-                    <div className="border-t pt-6">
-                        <div className="flex items-center space-x-4 mb-6">
-                            <label className="text-gray-700 font-medium">Quantity:</label>
-                            <input
-                                type="number"
-                                min="1"
-                                max={product.inventory_count}
-                                value={quantity}
-                                onChange={(e) => setQuantity(parseInt(e.target.value))}
-                                className="border rounded-md px-3 py-2 w-20"
-                            />
-                            <span className="text-sm text-gray-500">{product.inventory_count} available</span>
+                    <div className="border-t border-surface-200 pt-6">
+                        <div className="flex items-center space-x-6 mb-8">
+                            <label className="text-surface-700 font-semibold">Quantity:</label>
+                            <div className="flex items-center space-x-2">
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max={product.inventory_count}
+                                    value={quantity}
+                                    onChange={(e) => setQuantity(parseInt(e.target.value))}
+                                    className="border border-surface-200 rounded-xl px-4 py-2 w-24 text-center text-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
+                                />
+                                <span className="text-sm text-surface-500 font-medium">{product.inventory_count} available</span>
+                            </div>
                         </div>
 
-                        <button
-                            onClick={handleAddToCart}
-                            disabled={addingToCart || product.inventory_count === 0}
-                            className={`w-full py-4 rounded-lg font-bold text-lg text-white transition-colors ${product.inventory_count === 0
-                                ? 'bg-gray-400 cursor-not-allowed'
-                                : 'bg-blue-600 hover:bg-blue-700'
-                                }`}
-                        >
-                            {product.inventory_count === 0
-                                ? 'Out of Stock'
-                                : addingToCart
-                                    ? 'Adding...'
-                                    : 'Add to Cart'}
-                        </button>
+                        <div className="flex space-x-4">
+                            <Button
+                                onClick={handleAddToCart}
+                                disabled={addingToCart || product.inventory_count === 0}
+                                isLoading={addingToCart}
+                                size="lg"
+                                className="w-full py-4 text-lg shadow-xl shadow-brand-500/20"
+                            >
+                                {product.inventory_count === 0 ? 'Out of Stock' : 'Add to Cart'}
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>

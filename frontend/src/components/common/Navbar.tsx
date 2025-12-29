@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { Menu, X, Search, Home, Store, LogIn, UserPlus } from 'lucide-react';
+import { Menu, X, Search, Home, Store, LogOut } from 'lucide-react';
 import { NotificationBadge } from '../notifications/NotificationBadge';
+import { Button } from './Button';
 
 export function Navbar() {
     const { isAuthenticated, logout, user } = useAuth();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const closeMenu = () => setIsMenuOpen(false);
@@ -15,25 +17,25 @@ export function Navbar() {
     const isActive = (path: string) => location.pathname === path;
 
     return (
-        <nav className="bg-white shadow-md sticky top-0 z-50">
+        <nav className="fixed w-full z-50 transition-all duration-300 bg-white/70 backdrop-blur-lg border-b border-surface-200/50 supports-[backdrop-filter]:bg-white/60">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
                     {/* Logo and Desktop Nav */}
                     <div className="flex items-center">
-                        <Link to="/" onClick={closeMenu} className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-accent-600 flex items-center hover:opacity-80 transition-opacity">
+                        <Link to="/" onClick={closeMenu} className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-accent-600 flex items-center hover:opacity-80 transition-opacity tracking-tight">
                             ReupSpot
                         </Link>
                         <div className="hidden md:flex ml-10 space-x-8">
                             <Link
                                 to="/shops"
-                                className={`flex items-center space-x-1 ${isActive('/shops') ? 'text-brand-600' : 'text-gray-700 hover:text-brand-600'}`}
+                                className={`flex items-center space-x-1 font-medium transition-colors duration-200 ${isActive('/shops') ? 'text-brand-600' : 'text-surface-600 hover:text-brand-600'}`}
                             >
                                 <Store size={18} />
                                 <span>Shops</span>
                             </Link>
                             <Link
                                 to="/search"
-                                className={`flex items-center space-x-1 ${isActive('/search') ? 'text-brand-600' : 'text-gray-700 hover:text-brand-600'}`}
+                                className={`flex items-center space-x-1 font-medium transition-colors duration-200 ${isActive('/search') ? 'text-brand-600' : 'text-surface-600 hover:text-brand-600'}`}
                             >
                                 <Search size={18} />
                                 <span>Search</span>
@@ -46,31 +48,34 @@ export function Navbar() {
                         {isAuthenticated ? (
                             <>
                                 <NotificationBadge />
-                                <span className="text-gray-700 text-sm">Hi, {user?.email}</span>
+                                <span className="text-surface-600 text-sm font-medium">Hi, {user?.email}</span>
                                 {user?.role === 'buyer' && (
-                                    <Link to="/buyer/dashboard" className="text-gray-700 hover:text-brand-600 font-medium">Dashboard</Link>
+                                    <Button variant="ghost" size="sm" onClick={() => navigate('/buyer/dashboard')}>
+                                        Dashboard
+                                    </Button>
                                 )}
                                 {user?.role === 'seller' && (
-                                    <Link to="/seller/dashboard" className="text-gray-700 hover:text-brand-600 font-medium">Dashboard</Link>
+                                    <Button variant="ghost" size="sm" onClick={() => navigate('/seller/dashboard')}>
+                                        Dashboard
+                                    </Button>
                                 )}
-                                <button
-                                    onClick={() => { logout(); }}
-                                    className="text-gray-500 hover:text-gray-900 font-medium"
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => logout()}
+                                    className="text-surface-500 hover:text-red-600 hover:bg-red-50"
                                 >
                                     Logout
-                                </button>
+                                </Button>
                             </>
                         ) : (
                             <>
-                                <Link to="/login" className="text-gray-700 hover:text-brand-600 font-medium">
+                                <Button variant="ghost" onClick={() => navigate('/login')}>
                                     Login
-                                </Link>
-                                <Link
-                                    to="/register"
-                                    className="bg-brand-600 text-white px-4 py-2 rounded-md hover:bg-brand-700 transition-colors"
-                                >
+                                </Button>
+                                <Button variant="primary" onClick={() => navigate('/register')}>
                                     Register
-                                </Link>
+                                </Button>
                             </>
                         )}
                     </div>
@@ -79,7 +84,7 @@ export function Navbar() {
                     <div className="flex items-center md:hidden">
                         <button
                             onClick={toggleMenu}
-                            className="text-gray-700 hover:text-brand-600 focus:outline-none"
+                            className="text-surface-600 hover:text-brand-600 focus:outline-none p-2 rounded-lg hover:bg-surface-100 transition-colors"
                         >
                             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
@@ -89,12 +94,12 @@ export function Navbar() {
 
             {/* Mobile Menu Overlay */}
             {isMenuOpen && (
-                <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-lg border-t border-gray-100 py-2 animate-in slide-in-from-top-2 duration-200">
-                    <div className="px-4 space-y-1">
+                <div className="md:hidden absolute top-16 left-0 w-full bg-white/95 backdrop-blur-xl border-t border-surface-100 shadow-xl animate-in slide-in-from-top-2 duration-200">
+                    <div className="p-4 space-y-2">
                         <Link
                             to="/shops"
                             onClick={closeMenu}
-                            className={`flex items-center space-x-3 px-3 py-3 rounded-md ${isActive('/shops') ? 'bg-brand-50 text-brand-600' : 'text-gray-700 hover:bg-gray-50'}`}
+                            className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${isActive('/shops') ? 'bg-brand-50 text-brand-600 font-semibold' : 'text-surface-600 hover:bg-surface-50'}`}
                         >
                             <Store size={20} />
                             <span>Shops</span>
@@ -102,51 +107,41 @@ export function Navbar() {
                         <Link
                             to="/search"
                             onClick={closeMenu}
-                            className={`flex items-center space-x-3 px-3 py-3 rounded-md ${isActive('/search') ? 'bg-brand-50 text-brand-600' : 'text-gray-700 hover:bg-gray-50'}`}
+                            className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${isActive('/search') ? 'bg-brand-50 text-brand-600 font-semibold' : 'text-surface-600 hover:bg-surface-50'}`}
                         >
                             <Search size={20} />
                             <span>Search Products</span>
                         </Link>
 
-                        <div className="border-t border-gray-100 my-2 pt-2">
+                        <div className="border-t border-surface-100 my-2 pt-2">
                             {isAuthenticated ? (
                                 <>
-                                    <div className="px-3 py-2 text-sm text-gray-500 mb-2">Signed in as {user?.email}</div>
+                                    <div className="px-4 py-2 text-sm text-surface-400 mb-2 font-medium">Signed in as {user?.email}</div>
                                     <Link
                                         to={user?.role === 'seller' ? "/seller/dashboard" : "/buyer/dashboard"}
                                         onClick={closeMenu}
-                                        className="flex items-center space-x-3 px-3 py-3 rounded-md text-gray-700 hover:bg-gray-50"
+                                        className="flex items-center space-x-3 px-4 py-3 rounded-xl text-surface-600 hover:bg-surface-50"
                                     >
                                         <Home size={20} />
                                         <span>Dashboard</span>
                                     </Link>
                                     <button
                                         onClick={() => { logout(); closeMenu(); }}
-                                        className="w-full flex items-center space-x-3 px-3 py-3 rounded-md text-red-600 hover:bg-red-50 text-left"
+                                        className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 text-left transition-colors"
                                     >
-                                        <LogOutIcon />
+                                        <LogOut size={20} />
                                         <span>Logout</span>
                                     </button>
                                 </>
                             ) : (
-                                <>
-                                    <Link
-                                        to="/login"
-                                        onClick={closeMenu}
-                                        className="flex items-center space-x-3 px-3 py-3 rounded-md text-gray-700 hover:bg-gray-50"
-                                    >
-                                        <LogIn size={20} />
-                                        <span>Login</span>
-                                    </Link>
-                                    <Link
-                                        to="/register"
-                                        onClick={closeMenu}
-                                        className="flex items-center space-x-3 px-3 py-3 rounded-md text-brand-600 hover:bg-brand-50"
-                                    >
-                                        <UserPlus size={20} />
-                                        <span>Register</span>
-                                    </Link>
-                                </>
+                                <div className="grid grid-cols-2 gap-3 mt-4">
+                                    <Button variant="ghost" onClick={() => { navigate('/login'); closeMenu(); }} className="w-full justify-center">
+                                        Login
+                                    </Button>
+                                    <Button variant="primary" onClick={() => { navigate('/register'); closeMenu(); }} className="w-full justify-center">
+                                        Register
+                                    </Button>
+                                </div>
                             )}
                         </div>
                     </div>
@@ -154,14 +149,4 @@ export function Navbar() {
             )}
         </nav>
     );
-}
-
-function LogOutIcon() {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-            <polyline points="16 17 21 12 16 7"></polyline>
-            <line x1="21" y1="12" x2="9" y2="12"></line>
-        </svg>
-    )
 }
